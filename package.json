@@ -1,6 +1,10 @@
 {
-  "name": "drms-angular",
-  "version": "0.0.0",
+  "name": "benhvien",
+  "version": "1.0.0",
+  "engines": {
+    "node": "17.3.0",
+    "npm": "8.11.0"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -11,7 +15,7 @@
     "test": "ng test",
     "local-start": "ng serve --host 0.0.0.0"
   },
-  "private": true,
+  "private": false,
   "dependencies": {
     "@angular/animations": "^12.2.15",
     "@angular/common": "~12.2.0",
