@@ -3,13 +3,11 @@
   "version": "1.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "start-product": "ng serve --configuration production",
-    "build": "ng build",
-    "build-product": "ng build --configuration production",
-    "watch": "ng build --watch --configuration development",
+    "start": "node server.js",
+    "build": "ng build --aot --prod",
     "test": "ng test",
-    "local-start": "ng serve --host 0.0.0.0",
+    "lint": "ng lint",
+    "e2e": "ng e2e",
     "heroku-postbuild": "ng build --prod"
   },
   "private": true,
