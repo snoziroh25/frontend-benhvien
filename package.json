@@ -4,12 +4,9 @@
   "scripts": {
     "ng": "ng",
     "start": "node server.js",
-    "start-product": "ng serve --configuration production",
     "build": "ng build",
-    "build-product": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "local-start": "ng serve --host 0.0.0.0",
     "heroku-postbuild": "ng build --prod" 
   },
   "private": true,
