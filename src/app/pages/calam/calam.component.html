@@ -1,0 +1,73 @@
+<app-table-component [data]="caLams"  
+                    *ngIf="!(isLoading$ | async)"
+                    (rowClick)="onRowClick($event)" 
+                    (createButton)="showModal()"
+                    (editButtonClick)="showModal($event)"
+                    (deleteButtonClick)="showDeleteConfirm($event)"
+                    [pageIndex]="pageIndex"
+                    [totalPage]="totalPage"
+                    (pageIndexChange)="onPageChange($event)"
+                    (pageSizeChange)="onPageSizeChange($event)"
+                    id="table"
+                    >
+
+                    
+    <app-col-table header="ten" key="ten" align="left" type="text" width="100px">
+        
+        <ng-template #headerTable let-col1>
+            <div >Ca Làm</div>
+        </ng-template>
+    </app-col-table>
+    
+    <app-col-table header="startTime" key="startTime" align="left" type="text" width="100px">
+        <ng-template #headerTable let-col1>
+            <div >Thời gian bắt đầu</div>
+        </ng-template>
+    </app-col-table>
+
+    <app-col-table header="endTime" key="endTime" align="left" type="text" width="100px">
+        <ng-template #headerTable let-col1>
+            <div >Thời gian kết thúc</div>
+        </ng-template>
+    </app-col-table>
+
+
+</app-table-component>
+
+
+<nz-modal
+      [(nzVisible)]="isVisible"
+      [nzTitle]="modalTitle"
+      [nzContent]="modalContent"
+      [nzFooter]="modalFooter"
+      (nzOnCancel)="handleCancel()"
+      [nzWidth]="600"
+      id="modal"
+    >
+      <ng-template #modalTitle>{{!isUpdate ? 'Tạo mới' : "Cập nhật"}}</ng-template>
+
+      <ng-template #modalContent>
+          <form [formGroup]="formGroup">
+            <div nz-row>
+                <div id="shiftLable" nz-col nzSpan="8" class="input-label-custom">Ca Làm</div>
+                <input id="shiftInput" nz-col nzSpan="16" nz-input  class="input-type-custom" formControlName="ten" />
+            </div>
+    
+            <div nz-row class="mt-4">
+                <div id="startTimeLable" nz-col nzSpan="8" class="input-label-custom">Thời gian bắt đầu</div>
+                <nz-time-picker id="startTimeInput" nz-col nzSpan="16" nz-input  nzFormat="HH:mm" formControlName="startTime" style="border-radius: 10px;"></nz-time-picker>
+            </div>
+
+            <div nz-row class="mt-4">
+                <div id="endTimeLable" nz-col nzSpan="8" class="input-label-custom">Thời gian kết thúc</div>
+                <nz-time-picker id="endTimeInput" nz-col nzSpan="16" nz-input  nzFormat="HH:mm" formControlName="endTime" style="border-radius: 10px;"></nz-time-picker>
+            </div>
+
+          </form>
+      </ng-template>
+
+      <ng-template #modalFooter>
+        <app-button-common id="cancelBtn" [okButton]="false" style="margin-right: 10px" (clickButton)="handleCancel()">Cancel</app-button-common>
+        <app-button-common id="submitBtn" (clickButton)="handleOk()">Submit</app-button-common>
+      </ng-template>
+    </nz-modal>

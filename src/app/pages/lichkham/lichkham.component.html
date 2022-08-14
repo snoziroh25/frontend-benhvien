@@ -1,0 +1,90 @@
+<app-table-component [data]="lichKhams"  
+                    *ngIf="!(isLoading$ | async)"
+                    (rowClick)="onRowClick($event)" 
+                    (createButton)="showModal()"
+                    (deleteButtonClick)="showDeleteConfirm($event)"
+                    [pageIndex]="pageIndex"
+                    [totalPage]="totalPage"
+                    (pageIndexChange)="onPageChange($event)"
+                    (pageSizeChange)="onPageSizeChange($event)"
+                    [canEdit]="false"
+                    id="table"
+                    >
+
+                    
+    <app-col-table header="ngayKham" key="ngayKham" align="left" type="text" width="100px">
+        <ng-template #headerTable let-col1>
+            <div >Ngày khám</div>
+        </ng-template>
+    </app-col-table>
+
+    <app-col-table header="tenCa" key="tenCa" align="left" type="text" width="100px">
+        <ng-template #headerTable let-col1>
+            <div >Ca làm</div>
+        </ng-template>
+    </app-col-table>
+
+    <app-col-table header="nguoiKham" key="nguoiKham" align="left" type="text" width="100px">
+         <ng-template #headerTable let-col1>
+            <div >Bác sĩ</div>
+        </ng-template>
+    </app-col-table>
+
+    <app-col-table header="tenThaiPhu" key="tenThaiPhu" align="left" type="text" width="100px">
+        <ng-template #headerTable let-col1>
+           <div >Thai phụ</div>
+       </ng-template>
+   </app-col-table>
+
+</app-table-component>
+
+
+<nz-modal
+      [(nzVisible)]="isVisible"
+      [nzTitle]="modalTitle"
+      [nzContent]="modalContent"
+      [nzFooter]="modalFooter"
+      (nzOnCancel)="handleCancel()"
+      [nzWidth]="600"
+      id="modal"
+    >
+      <ng-template #modalTitle>{{!isUpdate ? 'Tạo mới' : "Cập nhật"}}</ng-template>
+
+      <ng-template #modalContent>
+          <form [formGroup]="formGroup">
+            <div nz-row>
+                <div id="dateLable" nz-col nzSpan="8" class="input-label-custom">Ngày khám</div>
+                <nz-date-picker 
+                    id="dateSelect"
+                    nz-col nzSpan="16"
+                    [nzPlaceHolder]="'Chọn ngày khám'" 
+                    class="date-type-custom" 
+                    nzFormat="dd/MM/yyyy" 
+                    [nzDisabledDate]="disabledDate"
+                    formControlName="ngayKham"
+                    (nzOnOpenChange)="onNgayKham()">
+                </nz-date-picker>
+            </div>
+    
+            <div nz-row class="mt-4">
+                <div id="shiftLable" nz-col nzSpan="8" class="input-label-custom">Ca làm</div>
+                <nz-select id="siftSelect" formControlName="tenCa" class="select-type-custom" [nzPlaceHolder]="'Chọn ca làm'" (ngModelChange)="onCaLam($event)">
+                    <nz-option *ngFor="let caLam of caLams" [nzValue]="caLam.id" [nzLabel]="caLam.ten" ></nz-option>
+                </nz-select>
+            </div>
+
+            <div nz-row class="mt-4">
+                <div id="doctorLable" nz-col nzSpan="8" class="input-label-custom">Người khám</div>
+                <nz-select id="doctorSelect" formControlName="nguoiKham" class="select-type-custom" [nzPlaceHolder]="'Chọn người khám'">
+                    <nz-option *ngFor="let nguoiKham of nguoiKhams" [nzValue]="nguoiKham.id" [nzLabel]="nguoiKham.ten" ></nz-option>
+                </nz-select>
+            </div>
+
+          </form>
+      </ng-template>
+
+      <ng-template #modalFooter>
+        <app-button-common id="cancelBtn" [okButton]="false" style="margin-right: 10px" (clickButton)="handleCancel()">Cancel</app-button-common>
+        <app-button-common id="submitBtn" (clickButton)="handleOk()">Submit</app-button-common>
+      </ng-template>
+    </nz-modal>

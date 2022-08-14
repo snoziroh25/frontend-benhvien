@@ -1,0 +1,129 @@
+<nz-spin [nzSpinning]="(isLoading$ | async)" [formGroup]="baoCaoGroup">
+    <div class="profile-container">
+        <div class="row-container">
+            <div >
+                <span id="yearSpan" class="input-label-custom">Năm thống kê</span>
+                <nz-date-picker nzMode="year" formControlName="year" id="yearInput" style="margin-left: 20px; border-radius: 10px;" nzPlaceHolder='Chọn năm'></nz-date-picker>
+            </div>
+        </div>
+
+        <div class="form-wrapper">
+            <div class="form-wrapper mt-4" style="position:relative; width: 83%;">
+              <div class="button-custom">
+                <button style="position: absolute; left: 0;" id="okBtn" class="btn-ok" (click)="onSubmit()">Xác nhận</button>
+              </div>
+            </div>
+        </div>
+        <br>
+<br>
+<div *ngIf="isSubmited">
+    <div class="button-custom" style="display: flex; justify-content: right;">
+        <button class="btn-update" id="exportBtn" style="position: absolute; right:200px;" (click)="onExport()">Xuất báo cáo</button>
+    </div>
+    <br>
+  <div class = "row-1" style="text-align: center;">
+      <div class = "schedule-info">
+          <div class = "image-des">
+              <img src="../../../assets//images/phone.png">
+          </div> 
+          <div class = "title-modal" >
+              Số lượt khám thai phụ
+          </div>
+          <div id="soluotKham" class = "detail">
+              {{totalKhamThaiPhu}}
+          </div>
+      </div>
+      <div class = "schedule-info">
+          <div class = "image-des">
+              <img src="../../../assets//images/receive.png">
+          </div> 
+          <div class = "title-modal" >
+              Số lượt khám trẻ
+          </div>
+          <div id="soLuotKhamTre" class = "detail">
+              {{totalKhamTre}}
+          </div>
+      </div>
+      <div class = "schedule-info" >
+          <div class = "image-des">
+              <img src="../../../assets//images/success.png">
+          </div> 
+          <div class = "title-modal" >
+              Số lượt tiêm
+          </div>
+          <div id="soLuotTiem" class = "detail">
+              {{totalTiem}}
+          </div>
+      </div>
+  </div>
+  <br>
+  <div id="chart">
+    <apx-chart [series]="LineChartOptions.series"
+        [chart]="LineChartOptions.chart" [xaxis]="LineChartOptions.xaxis"
+        [stroke]="LineChartOptions.stroke" [tooltip]="LineChartOptions.tooltip"
+        [dataLabels]="LineChartOptions.dataLabels"
+        [legend]="LineChartOptions.legend" [markers]="LineChartOptions.markers"
+        [grid]="LineChartOptions.grid" [yaxis]="LineChartOptions.yaxis">
+    </apx-chart>
+  </div>
+  <br>
+  <nz-table id="table" #basicTable [nzData]="names" style="max-width : 1400px">
+      <thead>
+        <tr>
+          <th>Cơ sở y tế</th>
+          <th>Tháng 1</th>
+          <th>Tháng 2</th>
+          <th>Tháng 3</th>
+          <th>Tháng 4</th>
+          <th>Tháng 5</th>
+          <th>Tháng 6</th>
+          <th>Tháng 7</th>
+          <th>Tháng 8</th>
+          <th>Tháng 9</th>
+          <th>Tháng 10</th>
+          <th>Tháng 11</th>
+          <th>Tháng 12</th>
+          <th>Tổng</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let csyt of basicTable.data; let i = index">
+          <td>{{csyt}}</td>
+          <td>{{this.data.count[i][0]}}</td>
+          <td>{{this.data.count[i][1]}}</td>
+          <td>{{this.data.count[i][2]}}</td>
+          <td>{{this.data.count[i][3]}}</td>
+          <td>{{this.data.count[i][4]}}</td>
+          <td>{{this.data.count[i][5]}}</td>
+          <td>{{this.data.count[i][6]}}</td>
+          <td>{{this.data.count[i][7]}}</td>
+          <td>{{this.data.count[i][8]}}</td>
+          <td>{{this.data.count[i][9]}}</td>
+          <td>{{this.data.count[i][10]}}</td>
+          <td>{{this.data.count[i][11]}}</td>
+          <td>{{this.data.count[i][12]}}</td>
+        </tr>
+        <tr>
+            <td>Tổng</td>
+            <td>{{this.sum[0]}}</td>
+            <td>{{this.sum[1]}}</td>
+            <td>{{this.sum[2]}}</td>
+            <td>{{this.sum[3]}}</td>
+            <td>{{this.sum[4]}}</td>
+            <td>{{this.sum[5]}}</td>
+            <td>{{this.sum[6]}}</td>
+            <td>{{this.sum[7]}}</td>
+            <td>{{this.sum[8]}}</td>
+            <td>{{this.sum[9]}}</td>
+            <td>{{this.sum[10]}}</td>
+            <td>{{this.sum[11]}}</td>
+        </tr>
+      </tbody>
+      <tfoot></tfoot>
+    </nz-table>
+    
+    
+  </div>
+</div>
+</nz-spin>
+

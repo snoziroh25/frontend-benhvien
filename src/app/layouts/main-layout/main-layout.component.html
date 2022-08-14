@@ -1,0 +1,187 @@
+<nz-layout class="full-height">
+  <nz-sider nzTheme="light" nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null" nzWidth="300px"
+    style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px 5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+    <div class="logo" (click)="navigateLink('dashboard')">
+      <img class="cursor-pointer" [src]="isCollapsed ? '../../../assets/images/logo.png' : '../../../assets/images/logo.png'"
+        style="height: 40px;">
+    </div>
+
+    <nz-divider></nz-divider>
+
+    <ul nz-menu nzMode="inline">
+      <!-- <li nz-menu-item [nzSelected]="isSelected('/dashboard')" routerLink="/dashboard" routerLinkActive="active" *ngIf="isDisableDashboard == false"
+        class="mt-2">
+        <img src="../../../assets/images/menu-icon-home.png" class="menu-icon">
+        <span *ngIf="!isCollapsed" class="margin-content custom-menu-text">Dasboard</span>
+      </li> -->
+
+      <!-- <li nz-menu-item [nzSelected]="isSelected('/profile')" routerLink="/profile" routerLinkActive="active" *ngIf="isDisableInfo == false"
+        class="mt-4">
+        <img src="../../../assets/images/menu-icon-my-page.png" class="menu-icon">
+        <span *ngIf="!isCollapsed" class="margin-content custom-menu-text">Quản lý thông tin</span>
+      </li> -->
+
+      <li nz-menu-item [nzSelected]="isSelected('/dangkykham')" routerLink="/dangkykham" routerLinkActive="active" *ngIf="isDisableDangKyKham == false"
+        class="mt-4">
+        <img src="../../../assets/images/dangky.png" class="menu-icon">
+        <span *ngIf="!isCollapsed" class="margin-content custom-menu-text">Đăng ký khám</span>
+      </li>
+
+      <li nz-menu-item [nzSelected]="isSelected('/dangkykhamtre')" routerLink="/dangkykhamtre" routerLinkActive="active" *ngIf="isDisableDangKyKhamTre == false"
+        class="mt-4">
+        <img src="../../../assets/images/dangky.png" class="menu-icon">
+        <span *ngIf="!isCollapsed" class="margin-content custom-menu-text">Đăng ký khám trẻ</span>
+      </li>
+
+      <li nz-menu-item [nzSelected]="isSelected('/dangkytiem')" routerLink="/dangkytiem" routerLinkActive="active" *ngIf="isDisableDangKyKham == false"
+        class="mt-4">
+        <img src="../../../assets/images/tiem.png" class="menu-icon">
+        <span *ngIf="!isCollapsed" class="margin-content custom-menu-text">Đăng ký tiêm</span>
+      </li>
+
+      <li nz-menu-item [nzSelected]="isSelected('/thaiphu')" routerLink="/thaiphu" routerLinkActive="active" *ngIf="isDisableListThaiPhu == false"
+        class="mt-4">
+        <img src="../../../assets/images/icon-people.png" class="menu-icon">
+        <span *ngIf="!isCollapsed" class="margin-content custom-menu-text">Danh sách thai phụ</span>
+      </li>
+
+      <li nz-menu-item [nzSelected]="isSelected('/sokham')" routerLink="/sokham" routerLinkActive="active" *ngIf="isDisableSoKham == false"
+        class="mt-4">
+        <img src="../../../assets/images/sokham.png" class="menu-icon">
+        <span *ngIf="!isCollapsed" class="margin-content custom-menu-text">Danh sách sổ khám</span>
+      </li>
+
+      <li nz-menu-item [nzSelected]="isSelected('/tresosinh')" routerLink="/tresosinh" routerLinkActive="active" *ngIf="isDisableListBaBy == false"
+        class="mt-4">
+        <img src="../../../assets/images/icon-people.png" class="menu-icon">
+        <span *ngIf="!isCollapsed" class="margin-content custom-menu-text">Danh sách trẻ sơ sinh</span>
+      </li>
+
+      <li nz-menu-item [nzSelected]="isSelected('/danhsachdangky')" routerLink="/danhsachdangky" routerLinkActive="active" *ngIf="isDisableDanhSachDangKy == false"
+        class="mt-4">
+        <img src="../../../assets/images/menu-icon-request.png" class="menu-icon">
+        <span *ngIf="!isCollapsed" class="margin-content custom-menu-text">Danh sách đăng ký tiêm</span>
+      </li>
+
+      <li nz-menu-item [nzSelected]="isSelected('/soyte')" routerLink="/soyte" routerLinkActive="active" *ngIf="isDisableSYT == false"
+        class="mt-4">
+        <img src="../../../assets/images/soyte.png" class="menu-icon">
+        <span *ngIf="!isCollapsed" class="margin-content custom-menu-text">Quản lý sở y tế</span>
+      </li>
+
+      <li nz-menu-item [nzSelected]="isSelected('/cosoyte')" routerLink="/cosoyte" routerLinkActive="active" *ngIf="isDisableCSYT == false"
+        class="mt-4">
+        <img src="../../../assets/images/cosoyte.png" class="menu-icon">
+        <span *ngIf="!isCollapsed" class="margin-content custom-menu-text">Quản lý cơ sở y tế</span>
+      </li>
+
+      <li nz-menu-item [nzSelected]="isSelected('/benh')" routerLink="/benh" routerLinkActive="active" *ngIf="isDisableBenh == false"
+        class="mt-4">
+        <img src="../../../assets/images/benh.png" class="menu-icon">
+        <span *ngIf="!isCollapsed" class="margin-content custom-menu-text">Quản lý bệnh</span>
+      </li>
+
+      <li nz-menu-item [nzSelected]="isSelected('/vacxin')" routerLink="/vacxin" routerLinkActive="active" *ngIf="isDisableVacxin == false"
+        class="mt-4">
+        <img src="../../../assets/images/vaccine.png" class="menu-icon">
+        <span *ngIf="!isCollapsed" class="margin-content custom-menu-text">Quản lý vaccine</span>
+      </li>
+
+      <li nz-menu-item [nzSelected]="isSelected('/bacsi')" routerLink="/bacsi" routerLinkActive="active" *ngIf="isDisableBacSi == false"
+        class="mt-4">
+        <img src="../../../assets/images/bacsi.png" class="menu-icon">
+        <span *ngIf="!isCollapsed" class="margin-content custom-menu-text">Quản lý bác sĩ</span>
+      </li>
+
+      <li nz-menu-item [nzSelected]="isSelected('/calam')" routerLink="/calam" routerLinkActive="active" *ngIf="isDisableCaLam == false"
+        class="mt-4">
+        <img src="../../../assets/images/calam.png" class="menu-icon">
+        <span *ngIf="!isCollapsed" class="margin-content custom-menu-text">Quản lý ca làm</span>
+      </li>
+
+      <li nz-menu-item [nzSelected]="isSelected('/lichkham')" routerLink="/lichkham" routerLinkActive="active" *ngIf="isDisableLichKham == false"
+      class="mt-4">
+      <img src="../../../assets/images/lichkham.png" class="menu-icon">
+      <span *ngIf="!isCollapsed" class="margin-content custom-menu-text">Quản lý lịch khám</span>
+      </li>
+
+      <li nz-menu-item [nzSelected]="isSelected('/taikhoan')" routerLink="/taikhoan" routerLinkActive="active" *ngIf="isDisableTaiKhoan == false"
+      class="mt-4">
+      <img src="../../../assets/images/taikhoan.png" class="menu-icon">
+      <span *ngIf="!isCollapsed" class="margin-content custom-menu-text">Quản lý tài khoản</span>
+      </li>
+
+      <li nz-menu-item [nzSelected]="isSelected('/baocao')" routerLink="/baocao" routerLinkActive="active" *ngIf="isDisableBaoCao == false"
+      class="mt-4">
+      <img src="../../../assets/images/baocao.png" class="menu-icon">
+      <span *ngIf="!isCollapsed" class="margin-content custom-menu-text">Báo cáo</span>
+      </li>
+
+    </ul>
+
+  </nz-sider>
+  <nz-layout class="full-height">
+    <nz-header>
+      <div class="header-custom">
+        <i class="trigger" nz-icon [nzType]="isCollapsed ? 'double-right' : 'double-left'"
+          (click)="isCollapsed = !isCollapsed"></i>
+
+        <!-- <i nz-icon nzType="align-left" nzTheme="outline" class="pl-2"></i> -->
+        <nz-divider nzType="vertical" style="color: black;"></nz-divider>
+        <!-- <nz-breadcrumb>
+          <nz-breadcrumb-item class="breadcum-custom parent-breadcum">{{parentBreadcum}}</nz-breadcrumb-item>
+          <nz-breadcrumb-item class="breadcum-custom child-breadcum">{{childBreadcum}}</nz-breadcrumb-item>
+        </nz-breadcrumb> -->
+
+        <div class="profile">
+          <div class="bell cursor-pointer">
+            <nz-badge [nzCount]="countThongBao" (click)="openDrawer()" [nzTooltipTitle]="'Thông báo'"
+            [nzTooltipPlacement]="['top']" nz-tooltip>
+              <img src="../../../assets//images/bell.png">
+            </nz-badge>
+          </div>
+
+          <div class="avatar cursor-pointer" nz-dropdown [nzDropdownMenu]="menu">
+            <img src="../../../assets//images/avatar-removebg-preview.png">
+          </div>
+
+          <div class="setting cursor-pointer" (click)="signOut()">
+            <i nz-icon nzType="logout" nzTheme="outline" style="font-size: 1.5rem;"></i>
+          </div>
+        </div>
+      </div>
+    </nz-header>
+    <nz-content class="full-height">
+      <div [class.inner-content]="!isDashboard" [class.dashboard-content]="isDashboard">
+        <ng-content></ng-content>
+      </div>
+    </nz-content>
+    <!-- <nz-footer>HTSC @2021</nz-footer> -->
+  </nz-layout>
+</nz-layout>
+
+<nz-drawer [nzVisible]="visibleDrawer" [nzWidth]="450" [nzClosable]="true" (nzOnClose)="closeDrawer()">
+  <ng-container *nzDrawerContent>
+    <nz-spin [nzSpinning]="isLoading">
+      <div class="title-notice">Thông báo</div>
+        <div class="notify-wrapper" *ngFor="let item of thongBaos" (click)="onThongBao(item)" [style.color]="getStyle(item.status)">
+          <div class="icon"><i nz-icon nzType="bell" nzTheme="outline" style="font-size: 20px;"></i></div>
+          <div class="content" >
+            {{item.content}}
+            <!-- <div class="title" [innerHTML]="item.content | safeHtml"></div> -->
+            <div class="time-wrapper">
+            </div>
+            <hr class="dashed">
+          </div>
+        </div>
+      <!-- <nz-result [nzIcon]="'smile-twotone'" [nzTitle]="'Bạn không có thông báo nào'" *ngIf="thongBaos.length == 0"></nz-result> -->
+    </nz-spin>
+  </ng-container>
+</nz-drawer>
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul nz-menu nzSelectable>
+    <li nz-menu-item routerLink="/profile" *ngIf="isVisibaleThongTin">Thông tin người dùng</li>
+    <li nz-menu-item routerLink="/change-password">Đổi mật khẩu</li>
+  </ul>
+</nz-dropdown-menu>

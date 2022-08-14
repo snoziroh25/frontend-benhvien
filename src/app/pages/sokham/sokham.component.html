@@ -1,0 +1,272 @@
+<app-table-component [data]="soKhams"  
+                    *ngIf="!(isLoading$ | async)"
+                    (deleteButtonClick)="showDeleteConfirm($event)"
+                    [pageIndex]="pageIndex"
+                    [totalPage]="totalPage"
+                    (pageIndexChange)="onPageChange($event)"
+                    (pageSizeChange)="onPageSizeChange($event)"
+                    [canEdit]="false"
+                    [canDelete]="!isThaiPhu"
+                    [canCreate]="!isThaiPhu"
+                    [canAction]="!isThaiPhu"
+                    (rowClick)="soKhamOnRowClick($event)"
+                    id="table"
+                    >
+
+                    
+    <app-col-table header="tenThaiPhu" key="tenThaiPhu" align="left" type="text" width="100px">
+        <ng-template #headerTable let-col1>
+            <div >Tên Thai Phụ</div>
+        </ng-template>
+    </app-col-table>
+
+    <app-col-table header="dongMo" key="dongMo" align="left" type="text" width="100px">
+        <ng-template #headerTable let-col1>
+           <div >Trạng thái</div>
+        </ng-template>
+        <ng-template #cellTable let-data1=data let-col=col>
+            <span [style.color]="getColorTextStatus(data1[col.key])">{{data1[col.key]}}</span>
+        </ng-template>
+   </app-col-table>
+
+   <app-col-table header="status" key="status" align="left" type="text" width="100px">
+        <ng-template #headerTable let-col1>
+            <div >Tình trạng</div>
+        </ng-template>
+        <ng-template #cellTable let-data1=data let-col=col>
+            <span [style.color]="getColorText(data1[col.key])">{{data1[col.key]}}</span>
+        </ng-template>
+    </app-col-table>
+
+    <app-col-table header="ngayTao" key="ngayTao" align="left" type="text" width="100px">
+        <ng-template #headerTable let-col1>
+            <div >Ngày tạo</div>
+        </ng-template>
+    </app-col-table>
+
+</app-table-component>
+
+
+<nz-modal [(nzVisible)]="isVisibleListHoSo" (nzOnCancel)="hoSoKhamHandleOk()" [nzWidth]="1000">
+    <div *nzModalTitle class="header">
+        SỔ KHÁM
+    </div>
+    <ng-container *nzModalContent>
+        <div class="form__group field">
+            <input type="input" class="form__field" placeholder="Tên thai phụ" name="tenThaiPhu" id='tenThaiPhu' value="{{selectedSoKham.tenThaiPhu}}" [disabled]="true" />
+            <label for="tenThaiPhu" class="form__label">Tên thai phụ</label>
+        </div>
+
+        <div class="form__group field">
+            <input type="input" class="form__field" placeholder="Lần có thai thứ" name="lanCoThaiThu" id='lanCoThaiThu' value="{{selectedSoKham.lanCoThaiThu}}" [disabled]="isThaiPhu"  />
+            <label for="lanCoThaiThu" class="form__label">Lần có thai thứ</label>
+        </div>
+
+        <div class="form__group field">
+            <input type="input" class="form__field" placeholder="Ngày kinh cuối" name="ngayKinhCuoi" id='ngayKinhCuoi' value="{{selectedSoKham.ngayKinhCuoi}}" [disabled]="isThaiPhu"/>
+            <label for="ngayKinhCuoi" class="form__label">Ngày kinh cuối</label>
+        </div>
+
+        <div class="form__group field">
+            <input type="input" class="form__field" placeholder="yyyy/mm/dd" name="ngaySinhDuKien" id='ngaySinhDuKien' value="{{selectedSoKham.ngaySinhDuKien}}" [disabled]="isThaiPhu"  />
+            <label for="ngaySinhDuKien" class="form__label">Ngày sinh dự kiến</label>
+        </div>
+
+        <div class="form__group field">
+            <input type="input" class="form__field" placeholder="Vắc xin" name="vacxin" id='vacxin' value="{{selectedSoKham.vacxin}}" [disabled]="isThaiPhu"  />
+            <label for="vacxin" class="form__label">Vaccine đã tiêm</label>
+        </div>
+
+        <nz-table #basicTable [nzData]="hoSoKhams" [nzPageIndex]="hoSoKhamPageIndex" [nzPageSize]="hoSoKhamPageSize"
+            [nzTotal]="hoSoKhamTotalPage" nzTitle="Danh sách hồ sơ khám" id="hoSoKhamTable">
+            <thead>
+                <tr>
+                    <th>Ngày khám</th>
+                    <th>Cơ sở y tế</th>
+                    <th>Người khám</th>
+                    <th>Trạng thái</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of basicTable.data" (click)="onRowHoSoClick(data)">
+                    <td>{{data.ngayKham}}</td>
+                    <td>{{data.tenCoSoYTe}}</td>
+                    <td>{{data.tenBacSi}}</td>
+                    <td [style.color]="getColorText(data.trangThai)">{{data.trangThai}}</td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </ng-container>
+    <div *nzModalFooter class="button-custom">
+            <button class="btn-end" *ngIf="isDong()" (click)="onCloseProcess()">Đóng sổ</button>
+            <button class="btn-update" *ngIf="!isThaiPhu" (click)="onUpdateSoKham()">Cập nhật</button>
+            <button class="btn-ok" (click)="hoSoKhamHandleOk()">Quay lại</button>
+    </div>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="isVisibleHoSo" (nzOnCancel)="onCloseHoSo()" [nzWidth]="700">
+    <div *nzModalTitle class="header" id="hoSoKhamModal">
+        HỒ SƠ KHÁM
+    </div>
+    <ng-container *nzModalContent>
+        <div class="form__group field">
+            <input type="input" class="form__field" placeholder="Trần Văn A" name="tenBacSi" id='tenBacSi' value="{{hoSoKham.tenBacSi}}" [disabled]="true" />
+            <label for="tenBacSi" class="form__label">Người khám</label>
+        </div>
+
+        <div class="form__group field">
+            <input type="input" class="form__field" placeholder="yyyy/mm/dd" name="ngayKham" id='ngayKham' value="{{hoSoKham.ngayKham}}" [disabled]="isThaiPhu" />
+            <label for="ngayKham" class="form__label">Ngày khám</label>
+        </div>
+
+        <div class="form__group field">
+            <input type="input" class="form__field" placeholder="Bạch Mai" name="tenCoSoYTe" id='tenCoSoYTe' value="{{hoSoKham.tenCoSoYTe}}" [disabled]="true" />
+            <label for="tenCoSoYTe" class="form__label">Cơ sở y tế</label>
+        </div>
+
+        <div class="form__group field">
+            <input type="input" class="form__field" placeholder="1" name="tuanThai" id='tuanThai' value="{{hoSoKham.tuanThai}}" [disabled]="isThaiPhu" />
+            <label for="tuanThai" class="form__label">Tuần thai</label>
+        </div>
+
+        <div class="form__group field">
+            <input type="input" class="form__field" placeholder="50kg" name="trongLuongMe" id='trongLuongMe' value="{{hoSoKham.trongLuongMe}}" [disabled]="isThaiPhu" />
+            <label for="trongLuongMe" class="form__label">Trọng lượng mẹ</label>
+        </div>
+
+        <div class="form__group field">
+            <input type="input" class="form__field" placeholder="160cm" name="chieuCaoMe" id='chieuCaoMe' value="{{hoSoKham.chieuCaoMe}}" [disabled]="isThaiPhu" />
+            <label for="chieuCaoMe" class="form__label">Chiều cao mẹ</label>
+        </div>
+
+        <div class="form__group field">
+            <input type="input" class="form__field" placeholder="60/phút" name="huyetAp" id='huyetAp' value="{{hoSoKham.huyetAp}}" [disabled]="isThaiPhu" />
+            <label for="huyetAp" class="form__label">Huyết áp</label>
+        </div>
+
+        <div class="form__group field">
+            <input type="input" class="form__field" placeholder="3cm" name="chieuCaoTuCung" id='chieuCaoTuCung' value="{{hoSoKham.chieuCaoTuCung}}" [disabled]="isThaiPhu" />
+            <label for="chieuCaoTuCung" class="form__label">Chiều cao tử cung</label>
+        </div>
+
+        <div class="form__group field">
+            <input type="input" class="form__field" placeholder="100cm" name="vongBung" id='vongBung' value="{{hoSoKham.vongBung}}" [disabled]="isThaiPhu" />
+            <label for="vongBung" class="form__label">Vòng bụng</label>
+        </div>
+
+        <div class="form__group field">
+            <input type="input" class="form__field" placeholder="90cm" name="khungChau" id='khungChau' value="{{hoSoKham.khungChau}}" [disabled]="isThaiPhu" />
+            <label for="khungChau" class="form__label">Khung chậu</label>
+        </div>
+
+        <div class="form__group field">
+            <input type="input" class="form__field" placeholder="90ml" name="thieuMau" id='thieuMau' value="{{hoSoKham.thieuMau}}" [disabled]="isThaiPhu" />
+            <label for="thieuMau" class="form__label">Thiếu máu</label>
+        </div>
+
+        <div class="form__group field">
+            <input type="input" class="form__field" placeholder="proteinNieu" name="proteinNieu" id='proteinNieu' value="{{hoSoKham.proteinNieu}}" [disabled]="isThaiPhu" />
+            <label for="proteinNieu" class="form__label">Protein niệu</label>
+        </div>
+
+        <div class="form__group field">
+            <input type="input" class="form__field" placeholder="Âm tính" name="xetNghiemHIV" id='xetNghiemHIV' value="{{hoSoKham.xetNghiemHIV}}" [disabled]="isThaiPhu" />
+            <label for="xetNghiemHIV" class="form__label">Xét nghiệm HIV</label>
+        </div>
+
+        <div class="form__group field">
+            <input type="input" class="form__field" placeholder="Âm tính" name="xetNghiemKhac" id='xetNghiemKhac' value="{{hoSoKham.xetNghiemKhac}}" [disabled]="isThaiPhu" />
+            <label for="xetNghiemKhac" class="form__label">Xét nghiệm khác</label>
+        </div>
+
+        <div class="form__group field">
+            <input type="input" class="form__field" placeholder="90bpm" name="timThai" id='timThai' value="{{hoSoKham.timThai}}" [disabled]="isThaiPhu" />
+            <label for="timThai" class="form__label">Tim thai</label>
+        </div>
+
+        <div class="form__group field">
+            <input type="input" class="form__field" placeholder="ngoiThai" name="ngoiThai" id='ngoiThai' value="{{hoSoKham.ngoiThai}}" [disabled]="isThaiPhu" />
+            <label for="ngoiThai" class="form__label">Ngôi thai</label>
+        </div>
+
+        <div class="form__group field">
+            <input type="input" class="form__field" placeholder="Ghi chú của bác sĩ" name="ghiChu" id='ghiChu' value="{{hoSoKham.ghiChu}}" [disabled]="isThaiPhu" />
+            <label for="ghiChu" class="form__label">Ghi chú</label>
+        </div>
+    </ng-container>
+    <div *nzModalFooter class="button-custom">
+        <button class="btn-update" *ngIf="!isThaiPhu" (click)="onUpdateHoSoKham()">Cập nhật</button>
+        <button class="btn-ok" (click)="onCloseHoSo()">Quay lại</button>
+    </div>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="isVisibleDongSo" (nzOnCancel)="onCloseDongSo()" [nzWidth]="700">
+<div *nzModalTitle class="header">
+    ĐÓNG SỔ KHÁM
+</div>
+
+<ng-container *nzModalContent>
+    <div>
+    <span>Xảy thai</span>
+    <br>
+    <label class="switch">
+        <input type="checkbox" id="myCheckBox" (click)="switched()">
+        <span class="slider round"></span>
+    </label>
+    </div>
+
+    <div class="create-bae" *ngIf="!isXayThai">
+        <div class="form__group field">
+            <input type="input" class="form__field" name="tenTre" id='tenTre' />
+            <label for="tenTre" class="form__label">Họ và tên</label>
+        </div>
+
+        <div class="form__group field">
+            <input type="input" class="form__field" name="ngaySinh" id='ngaySinh' />
+            <label for="ngaySinh" class="form__label">Ngày sinh</label>
+        </div>
+
+        <label for="gioiTinh" class="label-op">Giới tính</label>
+        <div class="select">
+        <select id="gioiTinh" class="select-op">
+            <option value="male">Nam</option>
+            <option value="female">Nữ</option>
+        </select>
+        <span class="focus"></span>
+        </div>
+
+        <label for="sinhNon" class="label-op">Sinh non</label>
+        <div class="select">
+        <select id="sinhNon" class="select-op">
+            <option value="no">Không</option>
+            <option value="yes">Có</option>
+        </select>
+        <span class="focus"></span>
+        </div>
+
+        <label for="diTat" class="label-op">Dị tật</label>
+        <div class="select">
+        <select id="diTat" class="select-op">
+            <option value="no">Không</option>
+            <option value="yes">Có</option>
+        </select>
+        <span class="focus"></span>
+        </div>
+
+        <div class="form__group field">
+            <input type="input" class="form__field" name="canNangSinh" id='canNangSinh'/>
+            <label for="name" class="form__label">Cân nặng sinh</label>
+        </div>
+
+        <div class="form__group field">
+            <input type="input" class="form__field" name="ghiChu" id='ghiChu' />
+            <label for="name" class="form__label">Ghi chú</label>
+        </div>
+
+    </div>
+</ng-container>
+<div *nzModalFooter class="button-custom">
+        <button id="backBtn" class="btn-ok" (click)="onCloseDongSo()">Quay lại</button>
+        <button id="closeBtn" class="btn-end" (click)="onDongSo()">Đóng sổ</button>
+</div>
+</nz-modal>

@@ -1,0 +1,116 @@
+<app-table-component [data]="dangKys"  
+                    *ngIf="!(isLoading$ | async)"
+                    (rowClick)="onRowClick($event)"
+                    [pageIndex]="pageIndex"
+                    [totalPage]="totalPage"
+                    (pageIndexChange)="onPageChange($event)"
+                    (pageSizeChange)="onPageSizeChange($event)"
+                    [canAction]="false"
+                    [canCreate]="false"
+                    [canDelete]="false"
+                    [canEdit]="false"
+                    id="table"
+                    >
+    <app-col-table header="tenThaiPhu" key="tenThaiPhu" align="left" type="text" width="100px">
+        <ng-template #headerTable let-col1>
+            <div>Người đăng ký</div>
+        </ng-template>
+    </app-col-table>
+
+    <app-col-table header="target" key="target" align="left" type="text" width="100px">
+        <ng-template #headerTable let-col1>
+            <div>Đối tượng</div>
+        </ng-template>
+    </app-col-table>
+
+    <app-col-table header="ngayTiem" key="ngayTiem" align="left" type="text" width="100px">
+         <ng-template #headerTable let-col1>
+            <div >Ngày tiêm</div>
+        </ng-template>
+    </app-col-table>
+
+    <app-col-table header="tenBenh" key="tenBenh" align="left" type="text" width="100px">
+        <ng-template #headerTable let-col1>
+            <div >Bệnh</div>
+        </ng-template>
+    </app-col-table>
+
+</app-table-component>
+
+
+<nz-modal [(nzVisible)]="isVisible" (nzOnCancel)="onClose()" [nzWidth]="700" id="acceptModal">
+<div *nzModalTitle class="header">
+    DUYỆT ĐĂNG KÝ TIÊM
+</div>
+
+<ng-container *nzModalContent>
+
+    <div class="create-bae">
+        <div class="form__group field">
+            <input id="targetInput" type="input" class="form__field" id='target' value="{{this.selectedDangKy.target}}" disabled />
+            <label for="target" class="form__label">Đối tượng tiêm</label>
+        </div>
+
+        <div class="form__group field">
+            <input id="nameInput" type="input" class="form__field" id='targetName' value="{{this.selectedDangKy.targetName}}" disabled />
+            <label for="targetName" class="form__label">Họ và tên</label>
+        </div>
+
+        <div class="form__group field">
+            <input id="dateInput" type="input" class="form__field" id='ngayTiem' value="{{this.selectedDangKy.ngayTiem}}" disabled/>
+            <label for="ngaySinh" class="form__label">Ngày tiêm</label>
+        </div>
+
+        <div class="form__group field">
+            <input id="deseasesInput" type="input" class="form__field" id='tenBenh' value="{{this.selectedDangKy.tenBenh}}" disabled/>
+            <label for="tenBenh" class="form__label">Tên bệnh</label>
+        </div>
+
+        <br>
+        
+        <label for="vacxin" class="label-op">Vaccine</label>
+        <div class="select">
+        <select id="vacxinSelect" class="select-op" (change)="selectChange()">
+            <option disabled selected hidden>Chọn vaccine</option>
+            <option *ngFor="let vacxin of vacxins" [value]="vacxin.id" [label]="vacxin.ten"></option>
+        </select>
+        <span class="focus"></span>
+        </div>
+
+        <br>
+
+        <label for="bacSi" class="label-op">Người tiêm</label>
+        <div class="select">
+        <select id="doctorSelect" class="select-op" (change)="selectChange()">
+            <option disabled selected hidden>Chọn người tiêm</option>
+            <option *ngFor="let bacSi of bacSis" [value]="bacSi.id" [label]="bacSi.ten"></option>
+        </select>
+        <span class="focus"></span>
+        </div>
+    </div>
+
+</ng-container>
+<div *nzModalFooter class="button-custom">
+        <button id="submitBtn" class="btn-ok" id="accept-btn" (click)="onAccept()" disabled>Xác nhận</button>
+        <button id="rejectBTn" class="btn-end" id="decline-btn" (click)="onDecline()">Từ chối</button>
+</div>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="isVisibleDecline" (nzOnCancel)="onCloseDecline()" [nzWidth]="700" id="rejectModal">
+    <div *nzModalTitle class="header">
+        TỪ CHỐI ĐĂNG KÝ
+    </div>
+    
+    <ng-container *nzModalContent>
+    
+        <div class="create-bae">
+            <div class="form__group field">
+                <textarea id="reasonInput" type="input" id='declineDescripe' placeholder="Nhập lý do từ chối đăng ký"></textarea>
+            </div>
+        </div>
+    
+    </ng-container>
+    <div *nzModalFooter class="button-custom">
+            <button id="submitBtn" class="btn-ok" id="confirmDecline" (click)="onCloseDecline()">Xác nhận</button>
+    </div>
+</nz-modal>

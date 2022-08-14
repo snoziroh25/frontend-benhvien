@@ -1,0 +1,78 @@
+<nz-spin [nzSpinning]="(isLoading$ | async)" [formGroup]="formGroup">
+    <div class="profile-container">
+        <div class="form-wrapper">
+                <div class="row-container">
+                    <div class="row1">
+                        <span id="citySpan" class="input-label-custom" >Tỉnh/Thành</span>
+                        <nz-select formControlName="tinhThanh" class="select-type-custom" id="citySelect" [nzPlaceHolder]="'Chọn Tỉnh/Thành'" (ngModelChange)="onTinhThanh($event)">
+                            <nz-option *ngFor="let tinhThanh of tinhThanhs" [nzValue]="tinhThanh.id" [nzLabel]="tinhThanh.ten"></nz-option>
+                        </nz-select>
+                    </div> 
+
+                    <div class="row1">
+                        <span id="districSpan" class="input-label-custom">Quận/Huyện</span>
+                        <nz-select formControlName="quanHuyen" class="select-type-custom" id="districtSelect" [nzPlaceHolder]="'Chọn Quận/Huyện'" (ngModelChange)="onQuanHuyen($event)" [nzDisabled]="disableQuan">
+                            <nz-option *ngFor="let quanHuyen of quanHuyens" [nzValue]="quanHuyen.id" [nzLabel]="quanHuyen.ten" ></nz-option>
+                        </nz-select>
+                    </div>
+          
+                    <div class="row1">
+                        <span id="subDistrictSpan" class="input-label-custom">Xã/Phường</span>
+                        <nz-select formControlName="xaPhuong" class="select-type-custom" id="subDistricSelect" [nzPlaceHolder]="'Chọn Xã/Phường'" (ngModelChange)="onXaPhuong($event)" [nzDisabled]="disableXa">
+                            <nz-option *ngFor="let xaPhuong of xaPhuongs" [nzValue]="xaPhuong.id" [nzLabel]="xaPhuong.ten" ></nz-option>
+                        </nz-select>
+                    </div>
+                </div>
+        
+                <div class="row-container">
+                    
+                    <div class="row1">
+                        <span id="hospitalSpan" class="input-label-custom">Cơ sở y tế</span>
+                        <nz-select formControlName="coSoYTe" class="select-type-custom" id="hospitalSelect" [nzPlaceHolder]="'Chọn cơ sở y tế'" (ngModelChange)="onCoSoYTe($event)" [nzDisabled]="disableCSYT">
+                            <nz-option *ngFor="let coSoYTe of coSoYTes" [nzValue]="coSoYTe.id" [nzLabel]="coSoYTe.ten" ></nz-option>
+                        </nz-select>
+                    </div>  
+
+                    <div class="row1">
+                        <span id="dateSpan" class="input-label-custom">Ngày khám</span>
+                        <nz-date-picker 
+                            id="dateSelect"
+                            [nzPlaceHolder]="'Chọn ngày khám'" 
+                            class="date-type-custom" 
+                            nzFormat="dd/MM/yyyy" 
+                            [nzDisabledDate]="disabledDate"
+                            formControlName="ngayKham"
+                            style="width: 66%;" 
+                            (nzOnOpenChange)="getLichKhamAvailable()">
+                        </nz-date-picker>
+                    </div>
+
+        
+                </div>
+        
+                <div class="row-container">
+                    <div class="row1">
+                        <span id="doctorSpan" class="input-label-custom">Ca khám và người khám</span>
+                        <nz-select id="doctorSelect" formControlName="caLam" class="select-type-custom" [nzPlaceHolder]="'Chọn ca khám'" [nzDisabled]="disableKham">
+                            <nz-option *ngFor="let lichKham of lichKhamAvailable" [nzValue]="lichKham.caLamId+','+lichKham.bacSiId" [nzLabel]="lichKham.tenCa+' - '+lichKham.nguoiKham" ></nz-option>
+                        </nz-select>
+                    </div>  
+          
+                    <div class="row1">
+                        <span id="childSpan" class="input-label-custom">Trẻ</span>
+                        <nz-select id="childSelect" formControlName="tre" class="select-type-custom" [nzPlaceHolder]="'Chọn trẻ cần khám'">
+                            <nz-option *ngFor="let tre of tres" [nzValue]="tre.id" [nzLabel]="tre.ten" ></nz-option>
+                        </nz-select>
+                    </div>
+                </div>
+
+        
+                <div class="form-wrapper mt-4" style="position:relative; width: 83%;">
+                    <button id="submitBtn" style="position: absolute; right: 0;" class="button-custom-1" (click)="onSubmit()" [disabled]="formGroup.invalid">Đăng ký</button>
+                </div>
+            
+           
+        </div>
+    </div>
+    
+    </nz-spin>

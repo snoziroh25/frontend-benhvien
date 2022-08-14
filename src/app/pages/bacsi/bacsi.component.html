@@ -1,0 +1,51 @@
+<app-table-component [data]="bacSis"  
+                    *ngIf="!(isLoading$ | async)"
+                    (createButton)="showModal()"
+                    (editButtonClick)="showModal($event)"
+                    (deleteButtonClick)="showDeleteConfirm($event)"
+                    id="table">
+    <app-col-table header="ten" key="ten" align="left" type="text" width="100px">
+      <ng-template #headerTable let-col1>
+        <div >Họ và tên</div>
+    </ng-template>
+    </app-col-table>
+
+    <app-col-table header="sdt" key="sdt" align="left" type="text" width="100px">
+      <ng-template #headerTable let-col1>
+        <div >Số điện thoại</div>
+    </ng-template>
+    </app-col-table>
+
+</app-table-component>    
+
+
+<nz-modal
+      [(nzVisible)]="isVisible"
+      [nzTitle]="modalTitle"
+      [nzContent]="modalContent"
+      [nzFooter]="modalFooter"
+      (nzOnCancel)="handleCancel()"
+      [nzWidth]="600"
+      id="modal"
+    >
+      <ng-template #modalTitle>{{!isUpdate ? 'Tạo mới' : "Cập nhật"}}</ng-template>
+
+      <ng-template #modalContent>
+          <form [formGroup]="formGroup">
+            <div nz-row>
+                <div id="nameLable" nz-col nzSpan="8" class="input-label-custom">Họ và tên</div>
+                <input nz-col nzSpan="16" nz-input id="nameInput" class="input-type-custom" formControlName="ten" />
+            </div>
+    
+            <div nz-row class="mt-4">
+                <div id="phoneLabel" nz-col nzSpan="8" class="input-label-custom">Số điện thoại</div>
+                <input nz-col nzSpan="16" nz-input id="phoneInput" class="input-type-custom" formControlName="sdt" />
+            </div>
+          </form>
+      </ng-template>
+
+      <ng-template #modalFooter>
+        <app-button-common id="cancelBtn" [okButton]="false" style="margin-right: 10px" (clickButton)="handleCancel()">Cancel</app-button-common>
+        <app-button-common id="okBtn" (clickButton)="handleOk()">Submit</app-button-common>
+      </ng-template>
+    </nz-modal>

@@ -1,0 +1,64 @@
+<app-table-component [data]="taiKhoans"  
+                    *ngIf="!(isLoading$ | async)"
+                    (createButton)="showModal()"
+                    (rowClick)="showModal($event)"
+                    (deleteButtonClick)="showDeleteConfirm($event)"
+                    [canCreate]="false"
+                    [canAction]="false"
+                    [canEdit]="false"
+                    [canDelete]="false"
+                    id="table">
+    <app-col-table header="username" key="username" align="left" type="text" width="100px">
+      <ng-template #headerTable let-col1>
+        <div >Username</div>
+    </ng-template>
+    </app-col-table>
+
+    <app-col-table header="roleTitle" key="roleTitle" align="left" type="text" width="100px">
+      <ng-template #headerTable let-col1>
+          <div >Role</div>
+      </ng-template>
+      <ng-template #cellTable let-data1=data let-col=col>
+        <span>{{getRole(data1[col.key])}}</span>
+      </ng-template>
+      </app-col-table>
+
+</app-table-component>
+
+
+<nz-modal
+      [(nzVisible)]="isVisible"
+      [nzTitle]="modalTitle"
+      [nzContent]="modalContent"
+      [nzFooter]="modalFooter"
+      (nzOnCancel)="handleCancel()"
+      [nzWidth]="600"
+      id="modal"
+    >
+      <ng-template #modalTitle ><div style="color: #1da740; font-size: 30px; font-family: 'Montserrat';">Đổi mật khẩu</div></ng-template>
+
+      <ng-template #modalContent>
+          <form [formGroup]="formGroup">
+            <div nz-row>
+                <div id="oldPasswordLable" nz-col nzSpan="8" class="input-label-custom">Mật khẩu cũ</div>
+                <input id="oldPasswordInput" nz-col nzSpan="16" nz-input  class="input-type-custom" formControlName="oldPassword" />
+            </div>
+    
+            <div nz-row class="mt-4">
+                <div id="newPasswordLable" nz-col nzSpan="8" class="input-label-custom">Mật khẩu mới</div>
+                <input id="newPasswordInput" nz-col nzSpan="16" nz-input  class="input-type-custom" formControlName="newPassword" />
+            </div>
+
+            <div nz-row class="mt-4">
+                <div id="confirmPasswordLable" nz-col nzSpan="8" class="input-label-custom">Nhập lại mật khẩu mới</div>
+                <input id="confirmPasswordInput" nz-col nzSpan="16" nz-input  class="input-type-custom" formControlName="confirmPassword" />
+            </div>
+
+          </form>
+      </ng-template>
+
+      <ng-template #modalFooter>
+        <app-button-common id="cancelBtn" [okButton]="false" style="margin-right: 10px" (clickButton)="handleCancel()">Cancel</app-button-common>
+        <app-button-common id="submitBtn" (clickButton)="handleOk()">Submit</app-button-common>
+      </ng-template>
+    </nz-modal>

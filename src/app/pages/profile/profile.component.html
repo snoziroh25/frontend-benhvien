@@ -1,0 +1,69 @@
+<nz-spin [nzSpinning]="(isLoading$ | async)" [formGroup]="userForm">
+<div class="profile-container">
+    
+    <div class="form-wrapper">
+       
+            <div class="row-container">
+                <div class="row1">
+                    <span id="nameSpan" class="input-label-custom">Họ và tên</span>
+                    <input  class="input-type-custom" type="text" id="nameInput"
+                    placeholder="Nhập họ và tên" autocomplete="new-password" style="width: 66%;"  formControlName="ten" />
+                    <div class="text-error" *ngIf="(nameF.touched || nameF.dirty) && nameF.hasError('required')">Trường bắt buộc</div>
+                </div>
+      
+                <div class="row1">
+                    <span id="dobSpan" class="input-label-custom">Ngày Sinh</span>
+                    <nz-date-picker
+                        id="dateSelect"
+                        [nzPlaceHolder]="'Chọn ngày sinh'" 
+                        class="date-type-custom"
+                        nzFormat="dd/MM/yyyy"
+                        [nzDisabledDate]="disabledDate"
+                        formControlName="ngaySinh"
+                        style="width: 66%;" >
+                    </nz-date-picker>
+                </div>
+            </div>
+    
+            <div class="row-container">
+                <div class="row1">
+                    <span id="cccdSpan" class="input-label-custom">CCCD/CMND</span>
+                    <input  class="input-type-custom" type="text" id="cccdInput"
+                    placeholder="Nhập căn cước công dân" autocomplete="new-password" style="width: 66%;" formControlName="cccd"  />
+                </div>  
+      
+                <div class="row1">
+                    <span id="phoneSpan" class="input-label-custom">Số điện thoại</span>
+                    <input  class="input-type-custom"  type="text" id="phoneInput"
+                    placeholder="Nhập số điện thoại" autocomplete="new-password" style="width: 66%;"  formControlName="sdt"/>
+                    <div class="text-error" *ngIf="(phoneF.touched || phoneF.dirty) && phoneF.hasError('required')">Trường bắt buộc</div>
+                    <div class="text-error" *ngIf="(phoneF.touched || phoneF.dirty) && phoneF.hasError('pattern')">Số điện thoại không đúng định dạng</div>
+                </div>
+            </div>
+    
+            <div class="row-container">
+                <div class="row1">
+                    <span id="emailSpan" class="input-label-custom">Email</span>
+                    <input  class="input-type-custom" type="text" id="emailInput"
+                    placeholder="Nhập Email" autocomplete="new-password" style="width: 66%;" formControlName="email"  />
+                    <div class="text-error" *ngIf="(emailF.touched || emailF.dirty) && emailF.hasError('required')">Trường bắt buộc</div>
+                    <div class="text-error" *ngIf="(emailF.touched || emailF.dirty) && emailF.hasError('pattern')">Email không đúng định dạng</div>
+                </div>  
+      
+                <div class="row1">
+                    <span id="addressSpan" class="input-label-custom">Địa chỉ</span>
+                    <input  class="input-type-custom" type="text" id="addressInput"
+                    placeholder="Nhập địa chỉ" autocomplete="new-password" style="width: 66%;" formControlName="diaChi"  />
+                </div>
+            </div>
+    
+            <div class="form-wrapper mt-4" style="position:relative; width: 83%;">
+                <button id="saveBtn" style="position: absolute; right: 0;" class="button-custom-1" (click)="onSubmit()"
+                [disabled]="userForm.invalid">Lưu thay đổi</button>
+            </div>
+        
+       
+    </div>
+</div>
+
+</nz-spin>

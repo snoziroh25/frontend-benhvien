@@ -1,0 +1,112 @@
+<nz-spin [nzSpinning]="(isLoading$ | async)" [formGroup]="registerForm">
+    <div class="profile-container">
+        <div class="form-wrapper">
+                <div class="header">
+                    Đăng ký tài khoản
+                </div>
+
+                <div class="row-container">
+                    
+                    <div class="row1">
+                        <span id="usernameSpan" class="input-label-custom">Tên đăng nhập</span>
+                        <div class="flex-column">
+                            <input  class="input-type-custom"  type="text" id="usernameInput"
+                            placeholder="Nhập tên đăng nhập" autocomplete="new-password" style="width: 33%;"  formControlName="username" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row-container">
+                    
+                    <div class="row1">
+                        <span id="passwordSpan" class="input-label-custom">Mật khẩu</span>
+                        <div class="flex-column">
+                            <input  class="input-type-custom" type="password" id="passwordInput"
+                            placeholder="Mật khẩu" autocomplete="new-password" style="width: 66%;"  formControlName="password" />
+                            <div class="text-error" *ngIf="(f.password.touched || f.password.dirty) && f.password.hasError('minlength')">Mật khẩu tối thiểu 6 ký tự</div>
+                            <div class="text-error" *ngIf="(f.password.touched || f.password.dirty) && f.password.hasError('required')">Trường bắt buộc nhập</div>
+                        </div>
+                    </div>  
+            
+                    <div class="row1">
+                        <span id="confirmPasswordSpan" class="input-label-custom">Nhập lại mật khẩu</span>
+                        <div class="flex-column">
+                            <input  class="input-type-custom"  type="password" id="confirmPasswordInput"
+                            placeholder="Nhập lại mật khẩu" autocomplete="new-password" style="width: 66%"  formControlName="confirmPassword" />
+                            <div class="text-error" *ngIf="(f.confirmPassword.touched || f.confirmPassword.dirty) && f.confirmPassword.hasError('matching')">Mật khẩu không khớp</div>
+                        </div>
+                        
+                    </div>
+                </div>
+        
+                <div class="row-container">
+                        
+
+                    <div class="row1">
+                        <span id="nameSpan" class="input-label-custom">Họ tên</span>
+                        <input  class="input-type-custom" type="text" id="nameInput"
+                        placeholder="Nhập họ và tên" autocomplete="new-password" style="width: 66%;" formControlName="ten"  />
+                    </div>  
+          
+                    <div class="row1">
+                        <span id="dobSpan" class="input-label-custom">Ngày sinh</span>
+                        <nz-date-picker 
+                            [nzPlaceHolder]="'Chọn ngày sinh'" 
+                            id="dobInput"
+                            class="date-type-custom" 
+                            nzFormat="dd/MM/yyyy" 
+                            [nzDisabledDate]="disabledDate"
+                            formControlName="ngaySinh"
+                            style="width: 66%;"
+                       ></nz-date-picker>
+                    </div>
+                    
+                </div>
+        
+                <div class="row-container">
+                    
+                    <div class="row1">
+                        <span id="cccdSpan" class="input-label-custom">CCCD/CMND</span>
+                        <input  class="input-type-custom" type="text" id="cccdInput"
+                        placeholder="Nhập căn cước công dân" autocomplete="new-password" style="width: 66%;" formControlName="cccd"  />
+                    </div>
+
+                    <div class="row1">
+                        <span id="phoneSpan" class="input-label-custom">Số điện thoại</span>
+                        <input  class="input-type-custom" type="text" id="phoneInput"
+                        placeholder="Nhập số điện thoại" autocomplete="new-password" style="width: 66%;" formControlName="sdt"  />
+                    </div>  
+          
+                </div>
+
+                <div class="row-container">
+                    
+                    <div class="row1">
+                        <span id="emailSpan" class="input-label-custom">Email</span>
+                        <input  class="input-type-custom" type="text" id="emailInput"
+                        placeholder="Nhập email" autocomplete="new-password" style="width: 66%;"  formControlName="email" />
+                    </div> 
+                
+                    <div class="row1">
+                        <span id="addressSpan" class="input-label-custom">Địa chỉ</span>
+                        <input  class="input-type-custom" type="text" id="addressInput"
+                        placeholder="Nhập địa chỉ" autocomplete="new-password" style="width: 66%;" formControlName="diaChi"  />
+                    </div>
+                </div>
+
+                <div class="row-container">
+                    <div class="row1">
+                        <button style="width: 10%;" id="registerBtn" class="button-register" (click)="onSubmit()" [disabled]="registerForm.invalid">Đăng ký</button>
+                    </div>
+                </div>
+                <div class="row-container">
+                    <div class="row1">
+                        <button style="width: 10%;" id="backBtn" class="button-back" (click)="onBack()">Quay lại</button>
+                    </div>
+                </div>
+                
+            
+           
+        </div>
+    </div>
+    
+    </nz-spin>

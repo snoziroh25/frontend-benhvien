@@ -1,0 +1,90 @@
+<nz-spin [nzSpinning]="isLoading">
+    <app-table-component [data]="coSoYTes"  
+                    *ngIf="!isLoading"
+                    (createButton)="showModal()"
+                    (editButtonClick)="showModal($event)"
+                    (deleteButtonClick)="showDeleteConfirm($event)"
+                    [pageIndex]="pageIndex"
+                    [totalPage]="totalPage"
+                    (pageIndexChange)="onPageChange($event)"
+                    (pageSizeChange)="onPageSizeChange($event)"
+                    id="table"
+                    >
+
+        <app-col-table header="ten" key="ten" align="left" type="text" width="100px">
+            <ng-template #headerTable let-col1>
+                <div >Tên</div>
+            </ng-template>
+        </app-col-table>
+
+        <app-col-table header="diaChi" key="diaChiChiTiet" align="left" type="text" width="100px">
+            <ng-template #headerTable let-col1>
+                <div >Địa chỉ</div>
+            </ng-template>
+        </app-col-table>
+    </app-table-component>
+</nz-spin>
+
+
+<nz-modal
+      [(nzVisible)]="isVisible"
+      (nzOnCancel)="handleCancel()"
+      [nzWidth]="600"
+      id="modal"
+    >
+      <div *nzModalTitle class="header">{{!isUpdate ? 'Tạo mới' : "Cập nhật"}}</div>
+
+      <div *nzModalContent>
+          <form [formGroup]="formGroup">
+            <div nz-row class="mt-4">
+                <div id="usernameLable" nz-col nzSpan="8" class="input-label-custom">Tên tài khoản</div>
+                <input nz-col nzSpan="16" nz-input  class="input-type-custom" id="usernameInput" formControlName="username" [readonly]="isUpdate">
+            </div>
+
+            <div nz-row class="mt-4"  *ngIf="!isUpdate">
+                <div id="passwordLable" nz-col nzSpan="8" class="input-label-custom">Mật khẩu</div>
+                <input nz-col nzSpan="16" nz-input  minlength="6" class="input-type-custom" id="passwordInput" type="password" autocomplete="new-password" formControlName="password">
+            </div>
+
+            <div nz-row class="mt-4">
+                <div id="nameLable" nz-col nzSpan="8" class="input-label-custom">Tên</div>
+                <input nz-col nzSpan="16" nz-input  class="input-type-custom" id="nameInput" formControlName="ten" />
+            </div>
+
+            <div nz-row class="mt-4">
+                <div id="cityLable" nz-col nzSpan="8" class="input-label-custom">Tỉnh/Thành</div>
+                <nz-select nz-col nzSpan="16" formControlName="tinhThanh" class="select-type-custom" id="citySelect" [nzPlaceHolder]="'Chọn Tỉnh/Thành'" (ngModelChange)="onTinhThanh($event)">
+                    <nz-option *ngFor="let tinhThanh of tinhThanhs" [nzValue]="tinhThanh.id" [nzLabel]="tinhThanh.ten"></nz-option>
+                </nz-select>
+            </div>
+
+            <div nz-row class="mt-4">
+                <div id="districtLable" nz-col nzSpan="8" class="input-label-custom">Quận/Huyện</div>
+                <nz-select nz-col nzSpan="16" formControlName="quanHuyen" class="select-type-custom" id="districtSelect" [nzPlaceHolder]="'Chọn Quận/Huyện'" (ngModelChange)="onQuanHuyen($event)" [nzDisabled]="disableQuan">
+                    <nz-option *ngFor="let quanHuyen of quanHuyens" [nzValue]="quanHuyen.id" [nzLabel]="quanHuyen.ten" ></nz-option>
+                </nz-select>
+            </div>
+
+            <div nz-row class="mt-4">
+                <div id="subDistricLable" nz-col nzSpan="8" class="input-label-custom">Xã/Phường</div>
+                <nz-select nz-col nzSpan="16" formControlName="xaPhuong" class="select-type-custom" id="subDistrictSelect" [nzPlaceHolder]="'Chọn Xã/Phường'" (ngModelChange)="onXaPhuong($event)" [nzDisabled]="disableXa">
+                    <nz-option *ngFor="let xaPhuong of xaPhuongs" [nzValue]="xaPhuong.id" [nzLabel]="xaPhuong.ten" ></nz-option>
+                </nz-select>
+            </div>
+    
+            <div nz-row class="mt-4">
+                <div id="addressLable" nz-col nzSpan="8" class="input-label-custom">Địa chỉ</div>
+                <input nz-col nzSpan="16" nz-input  class="input-type-custom" id="addressInput" formControlName="diaChi" />
+            </div>
+
+          </form>
+      </div>
+
+      <div *nzModalFooter class="button-custom">
+        <button id="cancelBtn" class="btn-end" (click)="handleCancel()">Hủy</button>
+
+        <button id="updateBtn" class="btn-update" (click)="handleOk()" *ngIf="isUpdate">Cập nhật</button>
+
+        <button id="saveBtn" class="btn-ok" (click)="handleOk()" *ngIf="!isUpdate">Lưu</button>
+      </div>
+    </nz-modal>

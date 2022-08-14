@@ -1,0 +1,73 @@
+<app-table-component [data]="soYTes"  
+                    *ngIf="!(isLoading$ | async)"
+                    (rowClick)="onRowClick($event)" 
+                    (createButton)="showModal()"
+                    (editButtonClick)="showModal($event)"
+                    (deleteButtonClick)="showDeleteConfirm($event)"
+                    [pageIndex]="pageIndex"
+                    [totalPage]="totalPage"
+                    (pageIndexChange)="onPageChange($event)"
+                    (pageSizeChange)="onPageSizeChange($event)"
+                    id="table"
+                    >
+
+                    
+    <app-col-table header="ten" key="ten" align="left" type="text" width="100px">
+      <ng-template #headerTable let-col1>
+        <div >Tên</div>
+    </ng-template>
+    </app-col-table>
+
+    <app-col-table header="diaChi" key="diaChi" align="left" type="text" width="100px">
+      <ng-template #headerTable let-col1>
+        <div >Địa chỉ</div>
+    </ng-template>
+    </app-col-table>
+
+
+</app-table-component>
+
+
+<nz-modal
+      [(nzVisible)]="isVisible"
+      [nzTitle]="modalTitle"
+      [nzContent]="modalContent"
+      [nzFooter]="modalFooter"
+      (nzOnCancel)="handleCancel()"
+      [nzWidth]="600"
+      id="modal"
+    >
+      <ng-template #modalTitle>{{!isUpdate ? 'Tạo mới' : "Cập nhật"}}</ng-template>
+
+      <ng-template #modalContent>
+          <form [formGroup]="formGroup">
+
+            <div nz-row class="mt-4">
+              <div id="usernameLable" nz-col nzSpan="8" class="input-label-custom">Tên tài khoản</div>
+              <input id="usernameInput" nz-col nzSpan="16" nz-input  class="input-type-custom" formControlName="username" [readonly]="isUpdate">
+            </div>
+
+            <div nz-row class="mt-4"  *ngIf="!isUpdate">
+              <div id="passwordLable" nz-col nzSpan="8" class="input-label-custom">Mật khẩu</div>
+              <input id="passwordInput" nz-col nzSpan="16" nz-input  minlength="6" class="input-type-custom" type="password" autocomplete="new-password" formControlName="password">
+            </div>
+
+            <div nz-row class="mt-4">
+              <div id="nameLable" nz-col nzSpan="8" class="input-label-custom">Tên</div>
+              <input id="nameInput" nz-col nzSpan="16" nz-input  class="input-type-custom" formControlName="ten" />
+            </div>
+
+            <div nz-row class="mt-4">
+              <div id="addressLable" nz-col nzSpan="8" class="input-label-custom">Địa Chỉ</div>
+              <input id="addressInput" nz-col nzSpan="16" nz-input  class="input-type-custom" formControlName="diaChi" />
+            </div>
+
+
+          </form>
+      </ng-template>
+
+      <ng-template #modalFooter>
+        <app-button-common id="cancelBtn" [okButton]="false" style="border: 1px; margin-right: 10px" (clickButton)="handleCancel()">Hủy</app-button-common>
+        <app-button-common id="submitBtn" (clickButton)="handleOk()">Xác nhận</app-button-common>
+      </ng-template>
+    </nz-modal>

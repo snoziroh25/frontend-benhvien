@@ -1,0 +1,110 @@
+<app-table-component [data]="thaiPhus"  
+                    *ngIf="!(isLoading$ | async)"
+                    (createButton)="showModal()"
+                    (editButtonClick)="showModal($event)"
+                    (deleteButtonClick)="showDeleteConfirm($event)"
+                    [pageIndex]="pageIndex"
+                    [totalPage]="totalPage"
+                    (pageIndexChange)="onPageChange($event)"
+                    (pageSizeChange)="onPageSizeChange($event)"
+                    id="table"
+                    >
+    <app-col-table header="ten" key="ten" align="left" type="text" width="100px">
+        <ng-template #headerTable let-col1>
+            <div >Tên</div>
+        </ng-template>
+    </app-col-table>
+
+    <app-col-table header="ngaySinh" key="ngaySinh" align="left" type="text" width="100px">
+         <ng-template #headerTable let-col1>
+            <div >Ngày Sinh</div>
+        </ng-template>
+    </app-col-table>
+
+    <app-col-table header="sdt" key="sdt" align="left" type="text" width="100px">
+        <ng-template #headerTable let-col1>
+            <div >Số điện thoại</div>
+        </ng-template>
+    </app-col-table>
+
+    <app-col-table header="cccd" key="cccd" align="left" type="text" width="100px">
+        <ng-template #headerTable let-col1>
+            <div >CCCD</div>
+        </ng-template>
+    </app-col-table>
+
+    <app-col-table header="email" key="email" align="left" type="text" width="100px">
+        <ng-template #headerTable let-col1>
+            <div >Email</div>
+        </ng-template>
+    </app-col-table>
+
+    <app-col-table header="diaChi" key="diaChi" align="left" type="text" width="100px">
+        <ng-template #headerTable let-col1>
+            <div >Địa chỉ</div>
+        </ng-template>
+    </app-col-table>
+
+</app-table-component>
+
+
+<nz-modal
+      [(nzVisible)]="isVisible"
+      (nzOnCancel)="handleCancel()"
+      [nzWidth]="600"
+      id="modal"
+    >
+      <div *nzModalTitle class="header">{{!isUpdate ? 'Tạo mới' : "Cập nhật"}}</div>
+
+      <div *nzModalContent>
+          <form [formGroup]="formGroup">
+            <div nz-row class="mt-4">
+                <div id="usernameLable" z-col nzSpan="8" class="input-label-custom">Tên tài khoản</div>
+                <input id="usernameInput" nz-col nzSpan="16" nz-input  class="input-type-custom" formControlName="username">
+            </div>
+
+            <div nz-row class="mt-4"  *ngIf="!isUpdate">
+                <div id="passwordLable" nz-col nzSpan="8" class="input-label-custom">Mật khẩu</div>
+                <input id="passwordInput" nz-col nzSpan="16" nz-input  class="input-type-custom" type="password" autocomplete="new-password" formControlName="password">
+            </div>
+            
+            <div nz-row class="mt-4">
+                <div id="nameLable" nz-col nzSpan="8" class="input-label-custom">Tên</div>
+                <input id="nameInput" nz-col nzSpan="16" nz-input  class="input-type-custom" formControlName="ten"/>
+            </div>
+    
+            <div nz-row class="mt-4">
+                <div id="dobLable" nz-col nzSpan="8" class="input-label-custom">Ngày Sinh</div>
+                <input id="dobInput" nz-col nzSpan="16" nz-input  class="input-type-custom" formControlName="ngaySinh" />
+            </div>
+    
+            <div nz-row class="mt-4">
+                <div id="phoneLable" nz-col nzSpan="8" class="input-label-custom">Số điện thoại</div>
+                <input id="phoneInput" nz-col nzSpan="16" nz-input  class="input-type-custom" formControlName="sdt" />
+            </div>
+
+            <div nz-row class="mt-4">
+                <div id="cccdLable" nz-col nzSpan="8" class="input-label-custom">CCCD</div>
+                <input id="cccdInput" nz-col nzSpan="16" nz-input  class="input-type-custom" formControlName="cccd" />
+            </div>
+
+            <div nz-row class="mt-4">
+                <div id="emailLable" nz-col nzSpan="8" class="input-label-custom">Email</div>
+                <input id="emailInput" nz-col nzSpan="16" nz-input  class="input-type-custom" formControlName="email" />
+            </div>
+
+            <div nz-row class="mt-4">
+                <div id="addressLable" nz-col nzSpan="8" class="input-label-custom">Địa chỉ</div>
+                <input id="addressInput" nz-col nzSpan="16" nz-input  class="input-type-custom" formControlName="diaChi" />
+            </div>
+          </form>
+      </div>
+
+      <div *nzModalFooter class="button-custom">
+        <button id="cancelBtn" class="btn-end" (click)="handleCancel()">Hủy</button>
+
+        <button id="updateBtn" class="btn-update" (click)="handleOk()" *ngIf="isUpdate">Cập nhật</button>
+
+        <button id="saveBtn" class="btn-ok" (click)="handleOk()" *ngIf="!isUpdate">Lưu</button>
+      </div>
+    </nz-modal>

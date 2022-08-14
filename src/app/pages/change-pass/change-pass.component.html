@@ -1,0 +1,43 @@
+<div class="wrapper-container" [formGroup]="passwordForm">
+    <div id="title" class="title">Thay đổi mật khẩu</div>
+ 
+
+    <div class="form-wrapper">
+        <div class="row-container">
+            <div class="row1">
+                <span id="oldPasswordSpan" class="input-label-custom">Mật khẩu cũ</span>
+                <div class="flex-column">
+                    <input  class="input-type-custom" type="password" id="oldPasswordInput"
+                    placeholder="Mật khẩu" autocomplete="new-password" style="width: 33%;"  formControlName="oldPassword" />
+                    <div class="text-error" *ngIf="(f.oldPassword.touched || f.oldPassword.dirty) && f.oldPassword.hasError('required')">Trường bắt buộc nhập</div>
+                </div>
+            </div>  
+        </div>
+        <div class="row-container">
+            <div class="row1">
+                <span id="newPasswordSpan" class="input-label-custom">Mật khẩu mới</span>
+                <div class="flex-column">
+                    <input  class="input-type-custom" type="password" id="newPasswordInput"
+                    placeholder="Mật khẩu" autocomplete="new-password" style="width: 66%;"  formControlName="password" />
+                    <div class="text-error" *ngIf="(f.password.touched || f.password.dirty) && f.password.hasError('required')">Trường bắt buộc nhập</div>
+                </div>
+               
+            </div>  
+    
+            <div class="row1">
+                <span id="confirmPasswordSpan" class="input-label-custom">Nhập lại mật khẩu</span>
+                <div class="flex-column">
+                    <input  class="input-type-custom"  type="password" id="confirmPasswordInput"
+                    placeholder="Nhập lại mật khẩu" autocomplete="new-password" style="width: 66%"  formControlName="confirmPassword" />
+                    <div class="text-error" *ngIf="(f.confirmPassword.touched || f.confirmPassword.dirty) && f.confirmPassword.hasError('matching')">Mật khẩu không khớp</div>
+                </div>
+                
+            </div>
+        </div>
+
+        <div class="form-wrapper mt-4" style="position:relative; width: 83%;">
+            <button id="submitBtn" style="position: absolute; right: 0;" [class.cursor-nodrop]="passwordForm.invalid" [disabled]="passwordForm.invalid" class="button-custom-1" (click)="onSubmit()">Đổi mật khẩu</button>
+        </div>
+    </div>
+    
+</div>

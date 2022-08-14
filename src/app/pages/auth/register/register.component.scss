@@ -1,0 +1,74 @@
+.profile-container {
+    padding: 10px 0 0 40px;
+    background-color: white;
+    border-radius: 15px;
+    height: 90vh;
+    min-height: 600px;
+
+
+    .form-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        width: 100%;
+
+        .row-container {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+
+            .row1 {
+                display: flex;
+                flex-direction: column;
+                margin-top: 30px;
+                width: 100%;
+                gap: 10px;
+            }
+        }
+    }
+    
+}
+
+
+.header {
+  color: #0f5c22;
+  font-size: 60px;
+  font-family: "Montserrat";
+}
+
+.button-back {
+  background-color: #58695c;
+  color: white;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  height: 35px;
+  border-radius: 10px;
+}
+
+.button-back:focus:not(:focus-visible) {
+  background-color: #071d0c;
+  color: white;
+}
+
+.button-register {
+  background-color: #52cf71;
+  color: white;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  height: 35px;
+  border-radius: 10px;
+}
+
+.button-register:focus:not(:focus-visible) {
+  background-color: #071d0c;
+  color: white;
+}

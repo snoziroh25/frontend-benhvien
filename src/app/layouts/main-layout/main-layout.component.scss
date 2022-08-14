@@ -1,0 +1,414 @@
+$font-family: "Montserrat";
+
+nz-layout {
+
+  .logo {
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .full-height {
+    min-height: 100vh;
+  }
+
+  nz-header {
+    background: #fff;
+    margin: 15px;
+    padding: 0;
+    border-radius: 10px;
+
+
+    .ant-layout-header .ant-menu {
+      line-height: inherit;
+      display: none;
+    }
+
+    .header-custom {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      align-items: center;
+      padding-left: 10px;
+  
+
+      .trigger {
+        font-size: 18px;
+        line-height: 64px;
+        padding: 0 24px;
+        cursor: pointer;
+        transition: color 0.3s;
+      
+      }
+      
+      .trigger:hover {
+        color: #e1ebe3;
+      }
+
+      .profile {
+        margin-left: auto;
+        padding-right: 30px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+      
+        .avatar {
+          img {
+            height: 40px;
+          }
+        }
+
+        .user-info {
+          margin-right: 15px;
+          font-weight: 700;
+        }
+
+        .bell {
+          img {
+            height: 26px;
+          }
+        }
+
+        .setting {
+          padding-bottom: 4px;
+        }
+      }
+    }
+    
+  }
+  
+  nz-content {
+    margin: 0 16px;
+     min-height: 90%;
+
+    .inner-content {
+      padding: 24px;
+      background: #fff;
+       min-height: 90%;
+    }
+
+    .dashboard-content {
+      background: transparent ;
+      min-height: 90%;
+    }
+  }
+  
+  nz-breadcrumb {
+    margin: 16px 0;
+
+    .breadcum-custom {
+      color: #3d4e41;
+      font-family: $font-family;
+      font-size: 15px;
+      font-weight: 700;
+    }
+  }
+
+  nz-footer {
+    text-align: center;
+  }
+
+  .menu-icon {
+    height: 18x;
+    width: 20px;
+  }
+
+  .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    background-color: #1da740;
+    color: white;
+    border-radius: 10px;
+    width: 80%;
+  }
+
+  .margin-content {
+    margin-left: 10px;
+  }
+
+  .custom-menu-text {
+    font-family: $font-family;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .custom-menu-item-text {
+    font-family: $font-family;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .sub-menu-custom {
+      font-family: $font-family ;
+      font-size: 14px;
+      font-weight: 600;
+      margin-top: 6%;
+  }
+
+  .sub-menu-custom:hover {
+    .ant-menu-submenu-title:hover {
+      color: #1da740 !important;
+    }
+    font-family: $font-family ;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 6%;
+   
+}
+
+.ant-menu-light  {
+  .ant-menu-item:hover {
+    color: #1da740;
+   }
+}
+
+  .ant-menu-inline .ant-menu-item-selected::after, .ant-menu-inline .ant-menu-selected::after {
+    border-right: none;
+  }
+}
+
+::ng-deep {
+  .ant-menu-light .ant-menu-submenu-title:hover {
+    color: #1da740;
+  }
+
+  .ant-menu-submenu-selected {
+    color: #1da740;
+    
+  }
+  .ant-menu-inline.ant-menu-root .ant-menu-submenu-title:hover {
+    color: #1da740;
+  }
+
+  nz-layout .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected:hover {
+    color: white !important;
+  }
+
+  .ant-radio-checked .ant-radio-inner{
+    border-color: #1da740 !important ;
+  }
+  
+  .ant-radio-checked .ant-radio-inner:after{
+    background-color: #1da740;
+  }
+  
+  .ant-radio:hover .ant-radio-inner {
+    border-color: #1da740 ;
+  }
+
+  .ant-radio-checked .ant-radio-inner:focus{
+    border-color: #1da740;
+  }
+}
+
+
+
+$font-family: "Montserrat";
+
+nz-layout {
+
+  .logo {
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .full-height {
+    min-height: 100vh;
+  }
+
+  nz-header {
+    background: #fff;
+    margin: 15px;
+    padding: 0;
+    border-radius: 10px;
+
+
+    .ant-layout-header .ant-menu {
+      line-height: inherit;
+      display: none;
+    }
+
+    .header-custom {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      align-items: center;
+      padding-left: 10px;
+  
+
+      .trigger {
+        font-size: 18px;
+        line-height: 64px;
+        padding: 0 24px;
+        cursor: pointer;
+        transition: color 0.3s;
+      
+      }
+      
+      .trigger:hover {
+        color: #1890ff;
+      }
+
+      .profile {
+        margin-left: auto;
+        padding-right: 30px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 12px;
+      
+        .avatar {
+          img {
+            height: 40px;
+            width: 80px;
+            border-radius: 50%;
+          }
+        }
+
+        .user-info {
+          margin-right: 15px;
+          font-weight: 700;
+        }
+
+        .bell {
+          img {
+            height: 26px;
+          }
+        }
+
+        .setting {
+          padding-bottom: 4px;
+        }
+      }
+    }
+    
+  }
+  
+  nz-content {
+    margin: 0 16px;
+    min-height: 100vh;
+
+    .inner-content {
+      padding: 24px;
+      background: #fff;
+      min-height: 100vh;
+    }
+
+    .dashboard-content {
+      background: transparent ;
+      min-height: 100vh;
+    }
+  }
+  
+  nz-breadcrumb {
+    margin: 16px 0;
+
+    .breadcum-custom {
+      color: #6C6C6C;
+      font-family: $font-family;
+      font-size: 15px;
+      font-weight: 700;
+    }
+  }
+
+  nz-footer {
+    text-align: center;
+  }
+
+  .menu-icon {
+    height: 18x;
+    width: 20px;
+  }
+
+  .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    background-color: #1da740;
+    color: white;
+    border-radius: 10px;
+    width: 80%;
+  }
+
+  .margin-content {
+    margin-left: 10px;
+  }
+
+  .custom-menu-text {
+    font-family: $font-family;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .custom-menu-item-text {
+    font-family: $font-family;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .sub-menu-custom {
+      font-family: $font-family ;
+      font-size: 14px;
+      font-weight: 600;
+      margin-top: 6%;
+  }
+
+  .sub-menu-custom:hover {
+    .ant-menu-submenu-title:hover {
+      color: #1da740 !important;
+    }
+    font-family: $font-family ;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 6%;
+   
+}
+
+  .ant-menu-inline .ant-menu-item-selected::after, .ant-menu-inline .ant-menu-selected::after {
+    border-right: none;
+  }
+}
+
+.title-notice {
+  font-size: 18px;
+  color: #6C6C6C;
+  font-weight: 600;
+}
+
+
+
+.notify-wrapper {
+  display: flex;
+  gap: 20px;
+  padding-top: 20px;
+  width: 100%;
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 100%;
+  }
+
+  .dashed {
+    border-top: 1px solid #bbb;
+    width: 100%;
+
+  }
+}
+
+[nz-radio]:not(:first-child) {
+  display: block;
+  height: 70px;
+  line-height: 70px;
+}
+input {
+  width: 100px;
+  margin-left: 10px;
+}
+
+
+@media print {
+  nz-sider, nz-header {
+    display: none;
+  }
+}

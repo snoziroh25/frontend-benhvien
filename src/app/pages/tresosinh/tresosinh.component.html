@@ -1,0 +1,196 @@
+<app-table-component [data]="treSoSinhs"  
+                    *ngIf="!(isLoading$ | async)"
+                    (rowClick)="onRowClick($event)" 
+                    (createButton)="showModal()"
+                    (deleteButtonClick)="showDeleteConfirm($event)"
+                    [pageIndex]="pageIndex"
+                    [totalPage]="totalPage"
+                    [canDelete]="!isThaiPhu"
+                    [canCreate]="!isThaiPhu"
+                    [canAction]="!isThaiPhu"
+                    [canEdit] = "false"
+                    (pageIndexChange)="onPageChange($event)"
+                    (pageSizeChange)="onPageSizeChange($event)"
+                    id="table"
+                    >
+    <app-col-table header="ten" key="ten" align="left" type="text" width="100px">
+      <ng-template #headerTable let-col1>
+        <div >Tên</div>
+    </ng-template>
+    </app-col-table>
+
+    <app-col-table header="ngaySinh" key="ngaySinh" align="left" type="text" width="100px">
+      <ng-template #headerTable let-col1>
+         <div >Ngày Sinh</div>
+     </ng-template>
+    </app-col-table>
+
+
+
+</app-table-component>
+
+<nz-modal [(nzVisible)]="isVisibleTre" (nzOnCancel)="treCancel()" [nzWidth]="1000" id="modal">
+  <div *nzModalTitle class="header">
+      THÔNG TIN TRẺ
+  </div>
+  <ng-container *nzModalContent>
+      <div class="form__group field">
+          <input type="input" class="form__field" placeholder="Họ và tên" name="ten" id='ten' value="{{this.selectedTreSoSinh.ten}}" [disabled]="isThaiPhu" />
+          <label for="ten" class="form__label">Họ và tên</label>
+      </div>
+
+      <div class="form__group field">
+        <input type="input" class="form__field" placeholder="yyyy/mm/dd" name="ngaySinh" id='ngaySinh' value="{{this.selectedTreSoSinh.ngaySinh}}" [disabled]="isThaiPhu"  />
+        <label for="ngaySinh" class="form__label">Ngày sinh</label>
+      </div>
+
+      <div *ngIf="!isThaiPhu">
+        <label for="gioiTinh" class="label-op">Giới tính</label>
+        <div class="select">
+        <select id="gioiTinh" class="select-op">
+            <option value="none" selected disabled hidden>{{this.selectedTreSoSinh.gioiTinh}}</option>
+            <option value="male">Nam</option>
+            <option value="female">Nữ</option>
+        </select>
+        <span class="focus"></span>
+        </div>
+      </div>
+
+      <div class="form__group field" *ngIf="isThaiPhu" (click)="onInfo(selectedTreSoSinh.thaiPhuId)">
+        <input type="input" class="form__field" placeholder="Dị tật" name="gioiTinh" id='gioiTinh' value="{{selectedTreSoSinh.gioiTinh}}" [disabled]="isThaiPhu"/>
+        <label for="gioiTinh" class="form__label">Giới tính</label>
+      </div>
+
+      <div class="form__group field" *ngIf="!isThaiPhu">
+        <input type="input" class="form__field" name="tenThaiPhu" id='tenThaiPhu' value="{{selectedTreSoSinh.tenThaiPhu}}" [disabled]="true" />
+        <label for="tenThaiPhu" class="form__label">Tên mẹ
+          <i class="fa fa-search" (click)="onInfo(selectedTreSoSinh.thaiPhuId)"></i>
+        </label>
+      </div>
+      
+      <div class="form__group field">
+        <input type="input" class="form__field" placeholder="Dị tật" name="diTat" id='diTat' value="{{getYesNo(selectedTreSoSinh.diTat)}}" [disabled]="isThaiPhu" />
+        <label for="diTat" class="form__label">Dị tật</label>
+      </div>
+
+      <div class="form__group field">
+        <input type="input" class="form__field" placeholder="Sinh non" name="sinhNon" id='sinhNon' value="{{getYesNo(selectedTreSoSinh.sinhNon)}}" [disabled]="isThaiPhu" />
+        <label for="sinhNon" class="form__label">Sinh non</label>
+      </div>
+
+      <div class="form__group field">
+        <input type="input" class="form__field" placeholder="Cân nặng khi sinh" name="canNangSinh" id='canNangSinh' value="{{selectedTreSoSinh.canNangSinh}}" [disabled]="isThaiPhu" />
+        <label for="canNangSinh" class="form__label">Cân nặng khi sinh</label>
+      </div>
+
+      <div class="form__group field">
+        <input type="input" class="form__field" placeholder="Cân nặng khi sinh" name="vacxin" id='vacxin' value="{{selectedTreSoSinh.vacxin}}" [disabled]="isThaiPhu" />
+        <label for="vacxin" class="form__label">Vaccine đã tiêm</label>
+      </div>
+
+      <div class="form__group field">
+        <input type="input" class="form__field" placeholder="Ghi chú" name="note" id='note' value="{{selectedTreSoSinh.note}}" [disabled]="isThaiPhu" />
+        <label for="note" class="form__label">Ghi chú</label>
+      </div>
+
+      <nz-table #treTable [nzData]="hoSoKhams" [nzPageIndex]="hoSoKhamPageIndex" [nzPageSize]="hoSoKhamPageSize"
+          [nzTotal]="hoSoKhamTotalPage" nzTitle="Danh sách hồ sơ khám" id="hoSoKhamTable">
+          <thead>
+              <tr>
+                  <th>Ngày khám</th>
+                  <th>Cơ sở y tế</th>
+                  <th>Người khám</th>
+                  <th>Trạng thái</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let data of treTable.data" (click)="onRowHoSoClick(data)">
+                  <td>{{data.ngayKham}}</td>
+                  <td>{{data.tenCSYT}}</td>
+                  <td>{{data.tenBacSi}}</td>
+                  <td [style.color]="getColorText(data.trangThai)">{{data.trangThai}}</td>
+              </tr>
+          </tbody>
+      </nz-table>
+  </ng-container>
+  <div *nzModalFooter class="button-custom">
+          <button class="btn-update" *ngIf="!isThaiPhu" (click)="onUpdateTre()">Cập nhật</button>
+          <button class="btn-ok" (click)="treCancel()">Quay lại</button>
+  </div>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="isVisibleInfo" (nzOnCancel)="onCloseInfo()" [nzWidth]="400" id="hoSoKhamModal">
+  <div *nzModalTitle class="header">
+    THÔNG TIN MẸ
+  </div>
+  <ng-container *nzModalContent>
+    <div class="form__group field">
+      <input type="input" class="form__field" name="ten" id='ten' value="{{selectedMom.ten}}" [disabled]="true" />
+      <label for="ten" class="form__label">Họ và tên</label>
+    </div>
+    <div class="form__group field">
+      <input type="input" class="form__field" name="ngaySinh" id='ngaySinh' value="{{selectedMom.ngaySinh}}" [disabled]="true" />
+      <label for="ngaySinh" class="form__label">Ngày sinh</label>
+    </div>
+    <div class="form__group field">
+      <input type="input" class="form__field" name="sdt" id='sdt' value="{{selectedMom.sdt}}" [disabled]="true" />
+      <label for="sdt" class="form__label">Số điện thoại</label>
+    </div>
+    <div class="form__group field">
+      <input type="input" class="form__field" name="cccd" id='cccd' value="{{selectedMom.cccd}}" [disabled]="true" />
+      <label for="cccd" class="form__label">Ngày sinh</label>
+    </div>
+    <div class="form__group field">
+      <input type="input" class="form__field" name="email" id='email' value="{{selectedMom.email}}" [disabled]="true" />
+      <label for="email" class="form__label">Email</label>
+    </div>
+    <div class="form__group field">
+      <input type="input" class="form__field" name="diaChi" id='diaChi' value="{{selectedMom.diaChi}}" [disabled]="true" />
+      <label for="diaChi" class="form__label">Địa chỉ</label>
+    </div>
+  </ng-container>
+  <div *nzModalFooter class="button-custom">
+    <button class="btn-ok" (click)="onCloseInfo()">Quay lại</button>
+  </div>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="isVisibleHoSo" (nzOnCancel)="onCloseHoSo()" [nzWidth]="700">
+  <div *nzModalTitle class="header">
+      HỒ SƠ KHÁM
+  </div>
+  <ng-container *nzModalContent>
+      <div class="form__group field">
+          <input type="input" class="form__field" placeholder="Trần Văn A" name="tenBacSi" id='tenBacSi' value="{{selectedHoSo.tenBacSi}}" [disabled]="true" />
+          <label for="tenBacSi" class="form__label">Người khám</label>
+      </div>
+
+      <div class="form__group field">
+          <input type="input" class="form__field" placeholder="yyyy/mm/dd" name="ngayKham" id='ngayKham' value="{{selectedHoSo.ngayKham}}" [disabled]="isThaiPhu" />
+          <label for="ngayKham" class="form__label">Ngày khám</label>
+      </div>
+
+      <div class="form__group field">
+          <input type="input" class="form__field" placeholder="Bạch Mai" name="tenCSYT" id='tenCSYT' value="{{selectedHoSo.tenCSYT}}" [disabled]="true" />
+          <label for="tenCoSoYTe" class="form__label">Cơ sở y tế</label>
+      </div>
+
+      <div class="form__group field">
+          <input type="input" class="form__field" placeholder="1" name="canNang" id='canNang' value="{{selectedHoSo.canNang}}" [disabled]="isThaiPhu" />
+          <label for="tuanThai" class="form__label">Cân nặng khi khám</label>
+      </div>
+
+      <div class="form__group field">
+          <input type="input" class="form__field" placeholder="50kg" name="chieuCao" id='chieuCao' value="{{selectedHoSo.chieuCao}}" [disabled]="isThaiPhu" />
+          <label for="trongLuongMe" class="form__label">Chiều cao khi khám</label>
+      </div>
+
+      <div class="form__group field">
+          <input type="input" class="form__field" placeholder="160cm" name="ghiChu" id='ghiChu' value="{{selectedHoSo.ghiChu}}" [disabled]="isThaiPhu" />
+          <label for="ghiChu" class="form__label">Ghi chú của bác sĩ</label>
+      </div>
+  </ng-container>
+  <div *nzModalFooter class="button-custom">
+      <button id="updateBtn" class="btn-update" *ngIf="!isThaiPhu" (click)="onUpdateHoSoKham()">Cập nhật</button>
+      <button id="backBtn" class="btn-ok" (click)="onCloseHoSo()">Quay lại</button>
+  </div>
+</nz-modal>

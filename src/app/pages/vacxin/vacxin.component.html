@@ -1,0 +1,70 @@
+<app-table-component [data]="vacxins"  
+                    *ngIf="!(isLoading$ | async)"
+                    (createButton)="showModal()"
+                    (editButtonClick)="showModal($event)"
+                    (deleteButtonClick)="showDeleteConfirm($event)"
+                    [pageIndex]="pageIndex"
+                    [totalPage]="totalPage"
+                    (pageIndexChange)="onPageChange($event)"
+                    (pageSizeChange)="onPageSizeChange($event)"
+                    id="table"
+                    >
+
+    <app-col-table header="ten" key="ten" align="left" type="text" width="100px">
+      <ng-template #headerTable let-col1>
+        <div >Tên Vaccine</div>
+    </ng-template>
+    </app-col-table>
+
+    <app-col-table header="tenBenh" key="tenBenh" align="left" type="text" width="100px">
+      <ng-template #headerTable let-col1>
+        <div >Bệnh</div>
+    </ng-template>
+    </app-col-table>
+
+    <app-col-table header="doTuoiTiem" key="doTuoiTiem" align="left" type="text" width="100px">
+      <ng-template #headerTable let-col1>
+        <div >Độ tuổi tiêm</div>
+    </ng-template>
+    </app-col-table>
+
+</app-table-component>
+
+
+<nz-modal
+      [(nzVisible)]="isVisible"
+      [nzTitle]="modalTitle"
+      [nzContent]="modalContent"
+      [nzFooter]="modalFooter"
+      (nzOnCancel)="handleCancel()"
+      [nzWidth]="600"
+      id="modal"
+    >
+      <ng-template #modalTitle>{{!isUpdate ? 'Tạo mới' : "Cập nhật"}}</ng-template>
+
+      <ng-template #modalContent>
+          <form [formGroup]="formGroup">
+            <div nz-row class="mt-4">
+                <div id="vacxinLable" nz-col nzSpan="8" class="input-label-custom">Tên Vaccine</div>
+                <input id="nameInput" nz-col nzSpan="16" nz-input  class="input-type-custom" formControlName="ten" />
+            </div>
+    
+            <div nz-row class="mt-4">
+              <div id="deseasesLable" nz-col nzSpan="8" class="input-label-custom">Bệnh</div>
+              <nz-select id="deseasesSelect" nz-col nzSpan="16" formControlName="benh" class="select-type-custom" [nzPlaceHolder]="'Chọn bệnh'" (ngModelChange)="onBenh($event)">
+                  <nz-option *ngFor="let benh of benhs" [nzValue]="benh.id" [nzLabel]="benh.ten" ></nz-option>
+              </nz-select>
+            </div>
+
+            <div nz-row class="mt-4" *ngIf="!isThaiPhu">
+                <div id="ageLable" nz-col nzSpan="8" class="input-label-custom">Độ tuổi tiêm</div>
+                <input id="ageInput" nz-col nzSpan="16" nz-input  class="input-type-custom" formControlName="doTuoiTiem" />
+            </div>
+          </form>
+      </ng-template>
+
+      <ng-template #modalFooter>
+        <app-button-common id="cancelBtn" [okButton]="false" style="margin-right: 10px" (clickButton)="handleCancel()">Cancel</app-button-common>
+        <app-button-common id="submitBtn" (clickButton)="handleOk()">Submit</app-button-common>
+      </ng-template>
+    </nz-modal>

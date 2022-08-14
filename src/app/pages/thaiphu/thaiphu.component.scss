@@ -1,0 +1,45 @@
+.button-custom {
+    width: 100%;
+    height: 40px;
+
+    .btn-ok {
+      background-color: #1da740;
+      border: none;
+      outline: none;
+      color: white;
+      height: 30px;
+      border-radius: 5px;
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+    
+    .btn-update {
+      background-color: #34a5da;
+      border: none;
+      outline: none;
+      color: white;
+      height: 30px;
+      border-radius: 5px;
+      margin-left: 10px;
+      margin-right: 10px;
+  }
+    .btn-end {
+      background-color: #df5858;
+      border: none;
+      outline: none;
+      color: white;
+      height: 30px;
+      border-radius: 5px;
+      margin-left: 10px;
+      margin-right: 10px;
+  }
+}
+
+.header {
+    color: rgb(19, 124, 9);
+    font-weight: 600;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: xx-large;
+  }

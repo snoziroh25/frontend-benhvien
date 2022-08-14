@@ -1,0 +1,90 @@
+<app-table-component [data]="benhs"  
+                    *ngIf="!(isLoading$ | async)"
+                    (createButton)="showModal()"
+                    (editButtonClick)="showModal($event)"
+                    (deleteButtonClick)="showDeleteConfirm($event)"
+                    [pageIndex]="pageIndex"
+                    [totalPage]="totalPage"
+                    (pageIndexChange)="onPageChange($event)"
+                    (pageSizeChange)="onPageSizeChange($event)"
+                    id="table"
+                    >
+
+    <app-col-table header="ten" key="ten" align="left" type="text" width="100px">
+      <ng-template #headerTable let-col1>
+        <div>Tên bệnh</div>
+    </ng-template>
+    </app-col-table>
+
+    <app-col-table header="moTa" key="moTa" align="left" type="text" width="100px">
+      <ng-template #headerTable let-col1>
+        <div >Mô tả</div>
+    </ng-template>
+    </app-col-table>
+
+    <app-col-table header="doiTuong" key="doiTuong" align="left" type="text" width="100px">
+      <ng-template #headerTable let-col1>
+        <div >Đối tượng</div>
+      </ng-template>
+      <ng-template #cellTable let-data1=data let-col=col>
+        <span>{{getDoituong(data1[col.key])}}</span>
+      </ng-template>
+    </app-col-table>
+
+    <app-col-table header="canTiem" key="canTiem" align="left" type="text" width="100px">
+      <ng-template #headerTable let-col1>
+        <div >Cần tiêm</div>
+      </ng-template>
+      <ng-template #cellTable let-data1=data let-col=col>
+        <span [style.color]="getColorText(data1[col.key])">{{getCanTiem(data1[col.key])}}</span>
+      </ng-template>
+    </app-col-table>
+
+</app-table-component>
+
+
+<nz-modal
+      [(nzVisible)]="isVisible"
+      [nzTitle]="modalTitle"
+      [nzContent]="modalContent"
+      [nzFooter]="modalFooter"
+      (nzOnCancel)="handleCancel()"
+      [nzWidth]="600"
+      id="modal"
+    >
+      <ng-template #modalTitle>{{!isUpdate ? 'Tạo mới' : "Cập nhật"}}</ng-template>
+
+      <ng-template #modalContent>
+          <form [formGroup]="formGroup">
+            <div nz-row>
+                <div id="nameLable" nz-col nzSpan="8" class="input-label-custom">Tên</div>
+                <input nz-col nzSpan="16" id="nameInput" nz-input  class="input-type-custom" formControlName="ten" />
+            </div>
+    
+            <div nz-row class="mt-4">
+                <div id="descriptionLable" nz-col nzSpan="8" class="input-label-custom">Mô tả</div>
+                <input nz-col nzSpan="16" id="descriptionInput" nz-input  class="input-type-custom" formControlName="moTa" />
+            </div>
+
+            <div nz-row class="mt-4">
+                <div id="targetLable" nz-col nzSpan="8" class="input-label-custom">Đối tượng</div>
+                <nz-select nz-col nzSpan="16" id="targetSelect" formControlName="benhOThaiPhu" class="select-type-custom" [nzPlaceHolder]="'Chọn đối tượng mắc bệnh'">
+                    <nz-option *ngFor="let doiTuong of doiTuongs" [nzValue]="doiTuong.value" [nzLabel]="doiTuong.title" ></nz-option>
+                </nz-select>
+            </div>
+    
+            <div nz-row class="mt-4">
+                <div id="needLable" nz-col nzSpan="8" class="input-label-custom">Cần tiêm</div>
+                <label class="switch">
+                  <input type="checkbox" id="checkBox" (click)="switched()">
+                  <span class="slider round"></span>
+              </label>
+            </div>
+          </form>
+      </ng-template>
+
+      <ng-template #modalFooter>
+        <app-button-common id="cancelBtn" [okButton]="false" style="margin-right: 10px" (clickButton)="handleCancel()">Cancel</app-button-common>
+        <app-button-common id="submitBtn" (clickButton)="handleOk()">Submit</app-button-common>
+      </ng-template>
+    </nz-modal>
